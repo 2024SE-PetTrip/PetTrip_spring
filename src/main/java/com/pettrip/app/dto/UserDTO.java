@@ -1,9 +1,6 @@
 package com.pettrip.app.dto;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 import com.pettrip.domain.User;
 
 @Getter
@@ -16,16 +13,19 @@ public class UserDTO {
     private String nickname;
     private String username;
     private String password;
-    private String userAddress;
+    private String address;
+    private String profileImageUrl;
 
-    public static UserDTO toUserDto(User user) {
+    public static UserDTO toUserDTO(User user) {
         UserDTO userDTO = new UserDTO();
         userDTO.setId(user.getId());
+        userDTO.setRealname(user.getRealname());
+        userDTO.setNickname(user.getNickname());
         userDTO.setUsername(user.getUsername());
         userDTO.setPassword(user.getPassword());
-        userDTO.setUserAddress(user.getUserAddress());
-        userDTO.setNickname(user.getNickname());
-        userDTO.setRealname(user.getRealname()); //실명 추가
+        userDTO.setAddress(user.getAddress());
+        userDTO.setProfileImageUrl(user.getProfileImageUrl());
+
         return userDTO;
     }
 }

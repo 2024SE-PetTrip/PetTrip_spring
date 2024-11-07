@@ -1,7 +1,5 @@
-package com.pettrip.app.dto;
+package com.pettrip.app.dto.care;
 
-import com.pettrip.domain.User;
-import com.pettrip.domain.enums.CareRequestStatus;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -12,11 +10,13 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class CareRequestDTO {
 
-    private Long userId;
+    private Long requesterId;
+
+    private LocalDateTime startDate;
+
+    private LocalDateTime endDate;
 
     private String requestDescription;
-
-    private CareRequestStatus status;
 
     private String requestImageUrl;
 }
