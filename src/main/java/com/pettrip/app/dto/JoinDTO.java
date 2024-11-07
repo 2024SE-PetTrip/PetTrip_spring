@@ -13,4 +13,5 @@ public class JoinDTO {
     private String realname;
     private String password;
     private String address;
+
 }

@@ -1,4 +1,5 @@
 package com.pettrip.apiPayload.exception;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import com.pettrip.apiPayload.code.BaseErrorCode;
