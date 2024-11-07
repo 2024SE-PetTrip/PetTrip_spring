@@ -1,11 +1,9 @@
 package com.pettrip.domain.care;
 
-import com.pettrip.app.dto.CareRequestDTO;
 import com.pettrip.domain.User;
 import com.pettrip.domain.common.BaseEntity;
 import com.pettrip.domain.enums.CareRequestStatus;
 import lombok.*;
-import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
@@ -17,6 +15,7 @@ import java.time.LocalDateTime;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class CareRequest extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,21 +23,29 @@ public class CareRequest extends BaseEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @OnDelete(action = OnDeleteAction.CASCADE)
-    @JoinColumn(name = "user_id")
-    private User user;
+    @JoinColumn(name = "requester_id", updatable = false, nullable = false)
+    private User requester;
+
+    @OneToOne(fetch = FetchType.LAZY)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    @JoinColumn(name = "provider_id")
+    private User provider;
 
     @Column(nullable = false)
-    @CreationTimestamp
-    private LocalDateTime requestDate;
+    private LocalDateTime startDate;
+
+    @Column(nullable = false)
+    private LocalDateTime endDate;
 
     @Column(nullable = false, length = 1000)
     private String requestDescription;
 
-    @Setter
-    @Enumerated(EnumType.STRING)
-    @Column(columnDefinition = "VARCHAR(10) DEFAULT 'PENDING'")
-    private CareRequestStatus status;
-
     @Column(length = 255)
     private String requestImageUrl;
+
+    @Setter
+    @Enumerated(EnumType.STRING)
+    @Column(columnDefinition = "VARCHAR(20) DEFAULT 'PENDING'")
+    private CareRequestStatus status;
 }
+

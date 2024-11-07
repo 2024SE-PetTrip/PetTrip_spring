@@ -1,6 +1,5 @@
 package com.pettrip.domain.care;
 
-import com.pettrip.domain.User;
 import com.pettrip.domain.common.BaseEntity;
 import lombok.*;
 import org.hibernate.annotations.OnDelete;
@@ -11,24 +10,21 @@ import javax.persistence.*;
 @Entity
 @Getter
 @Setter
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@NoArgsConstructor
 @AllArgsConstructor
 public class Evaluation extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long evaluationId;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @OneToOne
+    @JoinColumn(name = "care_request_id", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
-    @JoinColumn(name = "evaluator_id", nullable = false)
-    private User evaluator;
+    private CareRequest careRequest;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @OnDelete(action = OnDeleteAction.CASCADE)
-    @JoinColumn(name = "evaluatee_id", nullable = false)
-    private User evaluatee;
+    @Column
+    private Integer rating;
 
-    // 피드백
     @Column(length = 300)
     private String feedback;
 }

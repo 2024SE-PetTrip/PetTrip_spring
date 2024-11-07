@@ -36,11 +36,11 @@ public class User extends BaseEntity {
     @Column(nullable = false, length = 50)
     private String password;
 
+    @Column(nullable = false, length = 255)
+    private String address;
+
     @Column(length = 255)
     private String profileImageUrl;
-
-    @Column(nullable = false, length = 255)
-    private String userAddress; //user_address 에서 userAddress로 수정
 
     //@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     //private List<UserPloggingGroupApplyment> //userPloggingGroupApplyments;
@@ -51,7 +51,7 @@ public class User extends BaseEntity {
         user.setNickname(joinDTO.getNickname());
         user.setUsername(joinDTO.getUsername());
         user.setPassword(joinDTO.getPassword());
-        user.setUserAddress(joinDTO.getUserAddress());
+        user.setAddress(joinDTO.getUserAddress());
         return user;
     }
 
