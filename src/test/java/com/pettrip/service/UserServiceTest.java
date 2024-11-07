@@ -31,7 +31,6 @@ class UserServiceTest {
     void createTestUser() {
         User user = createUser();
 
-        // 필드가 올바르게 설정되었는지 검증
         assertThat(user.getId()).isNotNull();
         assertThat(user.getCreatedAt()).isNotNull();
         assertThat(user.getUpdatedAt()).isNotNull();
@@ -39,6 +38,6 @@ class UserServiceTest {
         assertThat(user.getNickname()).isEqualTo("tst3");
         assertThat(user.getUsername()).isEqualTo("Tester3@google.com");
         assertThat(user.getPassword()).isEqualTo("p333");
-        assertThat(user.getUserAddress()).isEqualTo("seoul");
+        assertThat(user.getAddress()).isEqualTo("seoul");
     }
 }
