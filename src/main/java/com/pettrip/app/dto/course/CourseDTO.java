@@ -10,5 +10,8 @@ import java.util.List;
 public class CourseDTO {
     private String courseName;
     private List<CoordinateDTO> coordinates;
+    private String courseDescription;
+    private int visibility;
+    private Long userId;
 }
 
