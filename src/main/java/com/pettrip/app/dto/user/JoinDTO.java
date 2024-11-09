@@ -1,4 +1,4 @@
-package com.pettrip.app.dto;
+package com.pettrip.app.dto.user;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;

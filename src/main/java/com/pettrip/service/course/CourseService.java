@@ -1,4 +1,4 @@
-package com.pettrip.service;
+package com.pettrip.service.course;
 
 import com.pettrip.app.dto.course.CoordinateDTO;
 import com.pettrip.app.dto.course.CourseDTO;
