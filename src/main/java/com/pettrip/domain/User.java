@@ -35,7 +35,7 @@ public class User extends BaseEntity {
     private String password;    //비밀번호, 저장시 암호화하여 저장
 
     @Column(length = 255)
-    private String profileImageUrl;   //이미지는 다른곳에 저장후 링크를 가져오는 방식
+    private String profileImageUrl;  //이미지는 다른곳에 저장후 링크를 가져오는 방식
 
     @Column(nullable = false, length = 255)
     private String address;     //사용자의 주소 저장
@@ -45,6 +45,7 @@ public class User extends BaseEntity {
 
     public static User toUser(JoinDTO joinDTO) {
         User user = new User();
+        user.setRealname(joinDTO.getRealname());
         user.setNickname(joinDTO.getNickname());
         user.setUsername(joinDTO.getUsername());
         user.setPassword(joinDTO.getPassword());
