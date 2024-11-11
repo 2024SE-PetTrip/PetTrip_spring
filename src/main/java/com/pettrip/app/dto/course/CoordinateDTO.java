@@ -1,18 +1,15 @@
 package com.pettrip.app.dto.course;
+import lombok.Getter;
+import lombok.Setter;
+
 import java.util.List;
+@Getter
+@Setter
 public class CoordinateDTO {
-    private int order;
+    private int sequence;
     private double latitude;
     private double longitude;
 
-    // Getters and Setters
-    public int getOrder() { return order; }
-    public void setOrder(int order) { this.order = order; }
 
-    public double getLatitude() { return latitude; }
-    public void setLatitude(double latitude) { this.latitude = latitude; }
-
-    public double getLongitude() { return longitude; }
-    public void setLongitude(double longitude) { this.longitude = longitude; }
 }
 
