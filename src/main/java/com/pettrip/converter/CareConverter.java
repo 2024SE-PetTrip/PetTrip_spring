@@ -2,8 +2,10 @@ package com.pettrip.converter;
 
 import com.pettrip.app.dto.care.CareRequestDTO;
 import com.pettrip.app.dto.care.CareResponseDTO;
+import com.pettrip.app.dto.care.ChatMessageDTO;
 import com.pettrip.app.dto.care.EvaluationResponseDTO;
 import com.pettrip.domain.care.CareRequest;
+import com.pettrip.domain.care.ChatMessage;
 import com.pettrip.domain.care.Evaluation;
 import com.pettrip.domain.enums.CareRequestStatus;
 
@@ -59,6 +61,14 @@ public class CareConverter {
         return evaluations.stream()
                 .map(CareConverter::toEvaluationResponseDTO)
                 .collect(Collectors.toList());
+    }
+
+    public static ChatMessage toChatMessage(ChatMessageDTO dto) {
+        return ChatMessage.builder()
+                .roomId(dto.getRoomId())
+                .authorId(dto.getAuthorId())
+                .message(dto.getMessage())
+                .build();
     }
 }
 
