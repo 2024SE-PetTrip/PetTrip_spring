@@ -6,7 +6,9 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.time.Duration;
 import java.util.List;
+
 
 @Entity
 @Getter
@@ -22,7 +24,7 @@ public class Course {
 
     private String courseName; // 코스 이름 또는 추가 정보
 
-    @OneToMany(mappedBy = "course")
+    @OneToMany(mappedBy = "course", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Coordinate> coordinates; // 이 코스에 속한 좌표들
 
     @Column
@@ -51,4 +53,48 @@ public class Course {
 
     @Column
     private LocalDateTime updatedDate; // 코스 수정일
+
+    public String getDuration() {
+        if (startTime != null && endTime != null) {
+            Duration duration = Duration.between(startTime, endTime);
+            long hours = duration.toHours();
+            long minutes = duration.toMinutes() % 60;
+            long seconds = duration.getSeconds() % 60;
+            if (hours > 0) {
+                return String.format("%d시간 %d분 %d초", hours, minutes, seconds);
+            } else {
+                return String.format("%d분 %d초", minutes, seconds);
+            }
+        }
+        return "시간 정보 없음";
+    }
+
+    public void updateDistance() {
+        //좌표값이 없을때 return
+        if (coordinates == null || coordinates.size() < 2) {
+            distance = 0.0;
+            return;
+        }
+        distance = 0.0;
+        for (int i = 1; i < coordinates.size(); i++) {
+            Coordinate prev = coordinates.get(i - 1);
+            Coordinate current = coordinates.get(i);
+            distance += calculateDistance(prev, current);
+        }
+    }
+
+    private double calculateDistance(Coordinate c1, Coordinate c2) {
+        double earthRadius = 6371e3; // Radius in meters
+        double lat1 = Math.toRadians(c1.getLatitude());
+        double lat2 = Math.toRadians(c2.getLatitude());
+        double deltaLat = Math.toRadians(c2.getLatitude() - c1.getLatitude());
+        double deltaLon = Math.toRadians(c2.getLongitude() - c1.getLongitude());
+
+        double a = Math.sin(deltaLat / 2) * Math.sin(deltaLat / 2) +
+                Math.cos(lat1) * Math.cos(lat2) *
+                        Math.sin(deltaLon / 2) * Math.sin(deltaLon / 2);
+        double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+
+        return earthRadius * c; // Distance in meters
+    }
 }
