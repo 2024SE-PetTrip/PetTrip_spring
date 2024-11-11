@@ -1,14 +1,11 @@
-package com.pettrip.service;
+package com.pettrip.service.user;
 
-import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import com.pettrip.apiPayload.code.status.ErrorStatus;
 import com.pettrip.apiPayload.code.status.StatusResponse;
 import com.pettrip.apiPayload.code.status.SuccessStatus;
-import com.pettrip.app.dto.JoinDTO;
+import com.pettrip.app.dto.user.JoinDTO;
 import com.pettrip.domain.User;
 import com.pettrip.repository.UserRepository;
 
@@ -22,6 +19,7 @@ public class JoinService {
         this.userRepository = userRepository;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
+
     public StatusResponse joinProcess(JoinDTO joinDTO) {
         String username = joinDTO.getUsername();
         String password = joinDTO.getPassword();
@@ -32,7 +30,7 @@ public class JoinService {
 
         boolean isExist = userRepository.existsByUsername(username);
 
-        if(isExist) {   //이미 존재하는 이메일로 회원가입시도
+        if (isExist) {   //이미 존재하는 이메일로 회원가입시도
             return StatusResponse.ofError(ErrorStatus.REGISTER_ALREADY_USER_EXIST);
         }
 
@@ -80,3 +78,4 @@ public class JoinService {
 
         return StatusResponse.ofSuccess(SuccessStatus.REGISTER_JOIN_OK);
     }
+}

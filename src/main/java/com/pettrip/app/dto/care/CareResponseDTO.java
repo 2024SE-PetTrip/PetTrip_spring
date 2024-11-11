@@ -1,6 +1,5 @@
 package com.pettrip.app.dto.care;
 
-import com.pettrip.app.dto.UserDTO;
 import com.pettrip.domain.enums.CareRequestStatus;
 import lombok.*;
 
