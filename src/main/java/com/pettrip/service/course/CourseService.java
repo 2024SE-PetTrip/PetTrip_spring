@@ -48,7 +48,7 @@ public class CourseService {
         // 위치 데이터 저장
         for (CoordinateDTO coordinateDTO : courseDTO.getCoordinates()) {
             Coordinate coordinate = new Coordinate();
-            coordinate.setOrder(coordinateDTO.getOrder());
+            coordinate.setSequence(coordinateDTO.getSequence());
             coordinate.setLatitude(coordinateDTO.getLatitude());
             coordinate.setLongitude(coordinateDTO.getLongitude());
             coordinate.setCourse(course); // 코스와 연결

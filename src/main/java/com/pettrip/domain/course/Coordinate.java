@@ -11,7 +11,7 @@ public class Coordinate {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private int order;
+    private int sequence;
     private double latitude;
     private double longitude;
 
