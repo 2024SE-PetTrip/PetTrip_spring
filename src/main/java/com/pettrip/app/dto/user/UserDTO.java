@@ -1,4 +1,4 @@
-package com.pettrip.app.dto;
+package com.pettrip.app.dto.user;
 
 import lombok.*;
 import com.pettrip.domain.User;

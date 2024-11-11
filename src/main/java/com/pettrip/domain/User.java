@@ -1,12 +1,11 @@
 package com.pettrip.domain;
 
 import lombok.*;
-import com.pettrip.app.dto.JoinDTO;
-import com.pettrip.app.dto.LoginDTO;
+import com.pettrip.app.dto.user.JoinDTO;
+import com.pettrip.app.dto.user.LoginDTO;
 import com.pettrip.domain.common.BaseEntity;
 
 import javax.persistence.*;
-import java.util.List;
 
 @Entity
 @Getter
@@ -36,7 +35,7 @@ public class User extends BaseEntity {
     private String password;    //비밀번호, 저장시 암호화하여 저장
 
     @Column(length = 255)
-    private String profile_image_url;   //이미지는 다른곳에 저장후 링크를 가져오는 방식
+    private String profileImageUrl;   //이미지는 다른곳에 저장후 링크를 가져오는 방식
 
     @Column(nullable = false, length = 255)
     private String address;     //사용자의 주소 저장
