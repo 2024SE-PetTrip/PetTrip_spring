@@ -1,12 +1,11 @@
 package com.pettrip.domain;
 
 import lombok.*;
-import com.pettrip.app.dto.JoinDTO;
-import com.pettrip.app.dto.LoginDTO;
+import com.pettrip.app.dto.user.JoinDTO;
+import com.pettrip.app.dto.user.LoginDTO;
 import com.pettrip.domain.common.BaseEntity;
 
 import javax.persistence.*;
-import java.util.List;
 
 @Entity
 @Getter
@@ -50,7 +49,7 @@ public class User extends BaseEntity {
         user.setNickname(joinDTO.getNickname());
         user.setUsername(joinDTO.getUsername());
         user.setPassword(joinDTO.getPassword());
-        user.setAddress(joinDTO.getUserAddress());
+        user.setAddress(joinDTO.getAddress());
         return user;
     }
 

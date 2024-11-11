@@ -1,6 +1,6 @@
 package com.pettrip.service;
 
-import com.pettrip.app.dto.JoinDTO;
+import com.pettrip.app.dto.user.JoinDTO;
 import com.pettrip.domain.User;
 import com.pettrip.repository.UserRepository;
 import org.junit.jupiter.api.Test;
