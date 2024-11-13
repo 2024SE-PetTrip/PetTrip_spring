@@ -49,7 +49,7 @@ public class User extends BaseEntity {
         user.setNickname(joinDTO.getNickname());
         user.setUsername(joinDTO.getUsername());
         user.setPassword(joinDTO.getPassword());
-        user.setAddress(joinDTO.getUserAddress());
+        user.setAddress(joinDTO.getAddress());
         return user;
     }
 
