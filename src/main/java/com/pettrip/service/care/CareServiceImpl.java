@@ -20,6 +20,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -34,7 +35,7 @@ public class CareServiceImpl implements CareService {
 
     @Override
     @Transactional
-    public CareResponseDTO createCareRequest(CareRequestDTO careRequestDTO) {
+    public CareResponseDTO.AddCareDTO createCareRequest(CareRequestDTO careRequestDTO) {
         User requester = userRepository.findById(careRequestDTO.getRequesterId())
                 .orElseThrow(() -> new AppHandler(ErrorStatus.NOT_FOUND_USER));
 
@@ -43,46 +44,57 @@ public class CareServiceImpl implements CareService {
 
         careRequestRepository.save(careRequest);
 
-        return CareConverter.toCareResponseDTO(careRequest);
+        return CareConverter.addCareDTO(careRequest);
     }
 
     @Override
-    public List<CareResponseDTO> getAllCareRequest() {
+    public List<CareResponseDTO.GetCareDTO> getAllCareRequest() {
         List<CareRequest> careRequests = careRequestRepository.findAll();
 
-        return CareConverter.toCareResponseDTOList(careRequests);
+        return careRequests.stream()
+                .map(CareConverter::getCareDTO)
+                .collect(Collectors.toList());
     }
 
     @Override
-    public CareResponseDTO getCareRequestById(Long requestId) {
+    public CareResponseDTO.GetCareDetailDTO getCareRequestById(Long requestId) {
         CareRequest careRequest = careRequestRepository.findById(requestId)
                 .orElseThrow(() -> new AppHandler(ErrorStatus.NOT_FOUND_CARE_REQUEST));
 
-        return CareConverter.toCareResponseDTO(careRequest);
+        return CareConverter.getCareDetailDTO(careRequest);
     }
 
     @Override
-    public List<CareResponseDTO> getCareRequestsByRequesterId(Long requesterId) {
+    public List<CareResponseDTO.GetCareDTO> getCareRequestsByRequesterId(Long requesterId) {
         List<CareRequest> careRequests = careRequestRepository.findByRequesterId(requesterId);
 
-        return CareConverter.toCareResponseDTOList(careRequests);
+        return careRequests.stream()
+                .map(CareConverter::getCareDTO)
+                .collect(Collectors.toList());
     }
 
     @Override
-    public List<CareResponseDTO> getCareRequestsByStatus(CareRequestStatus status) {
+    public List<CareResponseDTO.GetCareDTO> getCareRequestsByStatus(CareRequestStatus status) {
         List<CareRequest> careRequests = careRequestRepository.findByStatus(status);
 
-        return CareConverter.toCareResponseDTOList(careRequests);
+        return careRequests.stream()
+                .map(CareConverter::getCareDTO)
+                .collect(Collectors.toList());
     }
 
     @Override
     @Transactional
-    public CareResponseDTO updateCareRequest(Long requestId, CareRequestDTO careRequestDto) {
+    public CareResponseDTO.UpdateCareDTO updateCareRequest(Long requestId, CareRequestDTO careRequestDto) {
         User requester = userRepository.findById(careRequestDto.getRequesterId())
                 .orElseThrow(() -> new AppHandler(ErrorStatus.NOT_FOUND_USER));
 
         CareRequest careRequest = careRequestRepository.findById(requestId)
                 .orElseThrow(() -> new AppHandler(ErrorStatus.NOT_FOUND_CARE_REQUEST));
+
+        // 상태가 PENDING이 아닐 경우 예외 처리
+        if (careRequest.getStatus() != CareRequestStatus.PENDING) {
+            throw new AppHandler(ErrorStatus.INVALID_STATUS_UPDATE);
+        }
 
         careRequest.setRequester(requester);
         careRequest.setStartDate(careRequestDto.getStartDate());
@@ -92,8 +104,9 @@ public class CareServiceImpl implements CareService {
 
         careRequestRepository.save(careRequest);
 
-        return CareConverter.toCareResponseDTO(careRequest);
+        return CareConverter.updateCareDTO(careRequest);
     }
+
 
     @Override
     @Transactional
@@ -107,7 +120,7 @@ public class CareServiceImpl implements CareService {
 
     @Override
     @Transactional
-    public CareResponseDTO matchCareProvider(Long requestId, Long providerId) {
+    public CareResponseDTO.MatchCareProviderDTO matchCareProvider(Long requestId, Long providerId) {
         CareRequest careRequest = careRequestRepository.findById(requestId)
                 .orElseThrow(() -> new AppHandler(ErrorStatus.NOT_FOUND_CARE_REQUEST));
 
@@ -123,7 +136,7 @@ public class CareServiceImpl implements CareService {
 
         careRequestRepository.save(careRequest);
 
-        return CareConverter.toCareResponseDTO(careRequest);
+        return CareConverter.matchCareProviderDTO(careRequest);
     }
 
     @Override

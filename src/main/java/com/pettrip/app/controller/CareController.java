@@ -23,35 +23,36 @@ public class CareController {
     private final CareService careService;
 
     @PostMapping("/add")
-    public ApiResponse<CareResponseDTO> addCareRequest(@RequestBody CareRequestDTO careRequestDTO) {
-        CareResponseDTO careResponseDTO = careService.createCareRequest(careRequestDTO);
-        return ApiResponse.of(SuccessStatus.CARE_REQUEST_OK, careResponseDTO);
+    public ApiResponse<CareResponseDTO.AddCareDTO> addCareRequest(@RequestBody CareRequestDTO careRequestDTO) {
+        CareResponseDTO.AddCareDTO care = careService.createCareRequest(careRequestDTO);
+        return ApiResponse.of(SuccessStatus.CARE_REQUEST_OK, care);
     }
 
     @GetMapping("/all")
-    public ApiResponse<List<CareResponseDTO>> getAllCareRequests() {
-        List<CareResponseDTO> allCareRequest = careService.getAllCareRequest();
+    public ApiResponse<List<CareResponseDTO.GetCareDTO>> getAllCareRequests() {
+        List<CareResponseDTO.GetCareDTO> allCareRequest = careService.getAllCareRequest();
         return ApiResponse.of(SuccessStatus.CARE_REQUEST_LIST_OK, allCareRequest);
     }
 
+    // Care 요청 상세 조회
     @GetMapping("/{requestId}")
-    public ApiResponse<CareResponseDTO> getCareRequestById(@PathVariable("requestId") Long requestId) {
-        CareResponseDTO careResponseDTO = careService.getCareRequestById(requestId);
+    public ApiResponse<CareResponseDTO.GetCareDetailDTO> getCareRequestById(@PathVariable("requestId") Long requestId) {
+        CareResponseDTO.GetCareDetailDTO careResponseDTO = careService.getCareRequestById(requestId);
         return ApiResponse.of(SuccessStatus.CARE_REQUEST_DETAIL_OK, careResponseDTO);
     }
 
     @GetMapping("/users/{userId}")
-    public ApiResponse<List<CareResponseDTO>> getCareRequestsByUserId(@PathVariable("userId") Long userId) {
-        List<CareResponseDTO> CareRequestsByUserId = careService.getCareRequestsByRequesterId(userId);
+    public ApiResponse<List<CareResponseDTO.GetCareDTO>> getCareRequestsByUserId(@PathVariable("userId") Long userId) {
+        List<CareResponseDTO.GetCareDTO> CareRequestsByUserId = careService.getCareRequestsByRequesterId(userId);
 
         return ApiResponse.of(SuccessStatus.CARE_REQUEST_LIST_OK, CareRequestsByUserId);
     }
 
     @GetMapping("/status")
-    public ApiResponse<List<CareResponseDTO>> getCareRequestsByStatus(
+    public ApiResponse<List<CareResponseDTO.GetCareDTO>> getCareRequestsByStatus(
             @RequestParam(value = "status", required = false) CareRequestStatus status) {
 
-        List<CareResponseDTO> careRequestsByStatus;
+        List<CareResponseDTO.GetCareDTO> careRequestsByStatus;
 
         if (status == null) {
             careRequestsByStatus = careService.getAllCareRequest();
@@ -64,11 +65,11 @@ public class CareController {
 
 
     @PutMapping("/{requestId}/update")
-    public ApiResponse<CareResponseDTO> updateCareRequest(
+    public ApiResponse<CareResponseDTO.UpdateCareDTO> updateCareRequest(
             @PathVariable("requestId") Long requestId,
             @RequestBody CareRequestDTO careRequestDTO) {
 
-        CareResponseDTO updatedCareRequest = careService.updateCareRequest(requestId, careRequestDTO);
+        CareResponseDTO.UpdateCareDTO updatedCareRequest = careService.updateCareRequest(requestId, careRequestDTO);
 
         return ApiResponse.of(SuccessStatus.CARE_REQUEST_UPDATED, updatedCareRequest);
     }
@@ -80,12 +81,12 @@ public class CareController {
     }
 
     @PutMapping("/{requestId}/match")
-    public ApiResponse<CareResponseDTO> matchCareProvider(
+    public ApiResponse<CareResponseDTO.MatchCareProviderDTO> matchCareProvider(
             @PathVariable("requestId") Long requestId,
             @RequestBody Map<String, Long> requestBody) {
 
         Long providerId = requestBody.get("providerId");
-        CareResponseDTO careResponseDTO = careService.matchCareProvider(requestId, providerId);
+        CareResponseDTO.MatchCareProviderDTO careResponseDTO = careService.matchCareProvider(requestId, providerId);
         return ApiResponse.of(SuccessStatus.CARE_PROVIDER_MATCHED, careResponseDTO);
     }
 
