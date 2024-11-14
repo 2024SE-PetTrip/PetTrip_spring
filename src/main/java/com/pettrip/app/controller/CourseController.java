@@ -26,5 +26,10 @@ public class CourseController {
         CourseResponseDTO courseResponseDTO = courseService.updateCourse(courseId, courseDTO);
         return ApiResponse.of(SuccessStatus.COURSE_UPDATED_OK, courseResponseDTO);
     }
+    @PutMapping("/delete/{courseId}")
+    public ApiResponse<Void> deleteCourse(@PathVariable Long courseId) {
+        courseService.deleteCourse(courseId);
+        return ApiResponse.of(SuccessStatus.COURSE_DELETED_OK, null);
+    }
 
 }

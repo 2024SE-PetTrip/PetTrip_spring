@@ -7,6 +7,7 @@ import com.pettrip.domain.User;
 import com.pettrip.domain.course.Coordinate;
 import com.pettrip.domain.course.Course;
 import com.pettrip.domain.course.CourseTag;
+import com.pettrip.domain.enums.CourseStatus;
 import com.pettrip.repository.CoordinateRepository;
 import com.pettrip.repository.CourseRepository;
 import com.pettrip.repository.CourseTagRepository;
@@ -117,5 +118,17 @@ public class CourseService {
         return new CourseResponseDTO(course.getCourseId());
     }
 
+    public void deleteCourse(Long courseId) {
+        // 코스를 가져오기
+        Course course = courseRepository.findById(courseId)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid course ID"));
+
+        // 코스 상태를 DELETE로 변경
+        course.setStatus(CourseStatus.DELETE);
+        course.setUpdatedDate(LocalDateTime.now());
+
+        // 코스 저장
+        courseRepository.save(course);
+    }
 }
 
