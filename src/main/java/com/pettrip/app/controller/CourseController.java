@@ -21,4 +21,10 @@ public class CourseController {
         return ApiResponse.of(SuccessStatus.COURSE_CREATED_OK, courseResponseDTO);
     }
 
+    @PutMapping("/update/{courseId}")
+    public ApiResponse<CourseResponseDTO> updateCourse(@PathVariable Long courseId, @RequestBody CourseDTO courseDTO) {
+        CourseResponseDTO courseResponseDTO = courseService.updateCourse(courseId, courseDTO);
+        return ApiResponse.of(SuccessStatus.COURSE_UPDATED_OK, courseResponseDTO);
+    }
+
 }

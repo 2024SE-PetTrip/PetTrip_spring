@@ -77,5 +77,45 @@ public class CourseService {
 
         return new CourseResponseDTO(course.getCourseId());
     }
+
+    public CourseResponseDTO updateCourse(Long courseId, CourseDTO courseDTO) {
+        // 코스 조회
+        Course course = courseRepository.findById(courseId)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid course ID"));
+
+        // 코스 제목 업데이트
+        course.setCourseName(courseDTO.getCourseName());
+
+        // 코스 설명 업데이트
+        course.setCourseDescription(courseDTO.getCourseDescription() != null ? courseDTO.getCourseDescription() : "");
+
+        // 공개 여부 업데이트
+        course.setStatus(courseDTO.getStatus());
+
+        // 기존 태그 제거
+        course.getTags().clear();
+        // 태그 업데이트
+        List<CourseTag> tags = new ArrayList<>();
+        for (String tagName : courseDTO.getTags()) {
+            CourseTag tag = courseTagRepository.findByName(tagName)
+                    .orElseGet(() -> {
+                        // 새로운 태그 저장
+                        CourseTag newTag = new CourseTag();
+                        newTag.setName(tagName);
+                        return courseTagRepository.save(newTag);
+                    });
+            tags.add(tag);
+        }
+        course.setTags(tags);
+
+        // 코스 업데이트 시간 설정
+        course.setUpdatedDate(LocalDateTime.now());
+
+        // 코스 저장
+        course = courseRepository.save(course);
+
+        return new CourseResponseDTO(course.getCourseId());
+    }
+
 }
 
