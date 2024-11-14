@@ -21,12 +21,4 @@ public class CourseController {
         return ApiResponse.of(SuccessStatus.COURSE_CREATED_OK, courseResponseDTO);
     }
 
-    /*
-
-    public ApiResponse<CareResponseDTO> addCareRequest(@RequestBody CareRequestDTO careRequestDTO) {
-        CareResponseDTO careResponseDTO = careService.createCareRequest(careRequestDTO);
-        return ApiResponse.of(SuccessStatus.CARE_REQUEST_OK, careResponseDTO);
-    }
-
-     */
 }

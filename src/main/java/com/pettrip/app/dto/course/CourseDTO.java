@@ -15,5 +15,6 @@ public class CourseDTO {
         private String courseDescription;
         private int visibility;
         private Long userId;
+        //코스 시작 버튼을 누른시점과 종료버튼을 누른 시점에 대한 코드가 없긴함.
 }
 
