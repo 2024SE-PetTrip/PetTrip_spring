@@ -2,6 +2,7 @@ package com.pettrip.service.course;
 
 import com.pettrip.app.dto.course.CoordinateDTO;
 import com.pettrip.app.dto.course.CourseDTO;
+import com.pettrip.app.dto.course.CourseResponseDTO;
 import com.pettrip.domain.User;
 import com.pettrip.domain.course.Coordinate;
 import com.pettrip.domain.course.Course;
@@ -26,12 +27,11 @@ public class CourseService {
     @Autowired
     private CoordinateRepository coordinateRepository;
 
-    public void createCourse(CourseDTO courseDTO) {
+    public CourseResponseDTO createCourse(CourseDTO courseDTO) {
         // 새로운 코스 생성
 
         User user = userRepository.findById(courseDTO.getUserId())
                 .orElseThrow(() -> new IllegalArgumentException("Invalid user ID"));
-
         Course course = new Course();
         course.setCourseName(courseDTO.getCourseName());
 
@@ -54,6 +54,8 @@ public class CourseService {
             coordinate.setCourse(course); // 코스와 연결
             coordinateRepository.save(coordinate);
         }
-        }
+
+        return new CourseResponseDTO(course.getCourseId());
+    }
 }
 
