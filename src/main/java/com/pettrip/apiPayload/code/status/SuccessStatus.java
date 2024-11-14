@@ -28,9 +28,10 @@ public enum SuccessStatus implements BaseCode {
     REGISTER_JOIN_OK(HttpStatus.OK, 200, "회원가입 성공!"),
 
     // 코스에디터 관련
-    COURSE_CREATED_OK(HttpStatus.OK, 200, "코스생성 성공!"),
-    COURSE_UPDATED_OK(HttpStatus.OK, 200, "코스수정 성공!"),
-    COURSE_DELETED_OK(HttpStatus.OK, 200, "코스삭제 성공!");
+    COURSE_CREATED_OK(HttpStatus.OK, 200, "코스 생성 성공!"),
+    COURSE_UPDATED_OK(HttpStatus.OK, 200, "코스 수정 성공!"),
+    COURSE_DELETED_OK(HttpStatus.OK, 200, "코스 삭제 성공!"),
+    COURSE_LIST_OK(HttpStatus.OK, 200, "코스 불러오기 성공!");
 
 
     private final HttpStatus httpStatus;

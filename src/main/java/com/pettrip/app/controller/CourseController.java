@@ -7,6 +7,8 @@ import com.pettrip.service.course.CourseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/course")
 public class CourseController {
@@ -30,6 +32,12 @@ public class CourseController {
     public ApiResponse<Void> deleteCourse(@PathVariable Long courseId) {
         courseService.deleteCourse(courseId);
         return ApiResponse.of(SuccessStatus.COURSE_DELETED_OK, null);
+    }
+
+    @GetMapping("/all")
+    public ApiResponse<List<CourseResponseDTO>> getAllCourses() {
+        List<CourseResponseDTO> allCourses = courseService.getAllCourses();
+        return ApiResponse.of(SuccessStatus.COURSE_LIST_OK, allCourses);
     }
 
 }

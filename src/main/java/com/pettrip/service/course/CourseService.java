@@ -3,6 +3,7 @@ package com.pettrip.service.course;
 import com.pettrip.app.dto.course.CoordinateDTO;
 import com.pettrip.app.dto.course.CourseDTO;
 import com.pettrip.app.dto.course.CourseResponseDTO;
+import com.pettrip.converter.CourseConverter;
 import com.pettrip.domain.User;
 import com.pettrip.domain.course.Coordinate;
 import com.pettrip.domain.course.Course;
@@ -130,5 +131,11 @@ public class CourseService {
         // 코스 저장
         courseRepository.save(course);
     }
+
+    public List<CourseResponseDTO> getAllCourses() {
+        List<Course> courses = courseRepository.findAll();
+        return CourseConverter.toCourseResponseDTOList(courses);
+    }
+
 }
 
