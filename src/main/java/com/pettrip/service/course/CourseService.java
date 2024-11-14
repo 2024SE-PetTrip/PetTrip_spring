@@ -6,14 +6,18 @@ import com.pettrip.app.dto.course.CourseResponseDTO;
 import com.pettrip.domain.User;
 import com.pettrip.domain.course.Coordinate;
 import com.pettrip.domain.course.Course;
+import com.pettrip.domain.course.CourseTag;
 import com.pettrip.repository.CoordinateRepository;
 import com.pettrip.repository.CourseRepository;
+import com.pettrip.repository.CourseTagRepository;
 import com.pettrip.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.xml.stream.Location;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class CourseService {
@@ -26,6 +30,9 @@ public class CourseService {
 
     @Autowired
     private CoordinateRepository coordinateRepository;
+
+    @Autowired
+    private CourseTagRepository courseTagRepository;
 
     public CourseResponseDTO createCourse(CourseDTO courseDTO) {
         // 새로운 코스 생성
@@ -41,7 +48,20 @@ public class CourseService {
 
         course.setLikeCount(0);
         course.setCourseDescription(courseDTO.getCourseDescription() != null ? courseDTO.getCourseDescription() : "");
-        course.setVisibility(courseDTO.getVisibility());
+        course.setStatus(courseDTO.getStatus());
+
+        List<CourseTag> tags = new ArrayList<>();
+        for (String tagName : courseDTO.getTags()) {
+            CourseTag tag = courseTagRepository.findByName(tagName)
+                    .orElseGet(() -> {
+                        // 새로운 태그 저장
+                        CourseTag newTag = new CourseTag();
+                        newTag.setName(tagName);
+                        return courseTagRepository.save(newTag);
+                    });
+            tags.add(tag);
+        }
+        course.setTags(tags);
 
         course = courseRepository.save(course); // 코스를 저장하고 ID를 가져옴
 

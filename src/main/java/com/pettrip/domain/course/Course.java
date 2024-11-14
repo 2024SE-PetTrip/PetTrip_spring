@@ -1,6 +1,7 @@
 package com.pettrip.domain.course;
 
 import com.pettrip.domain.User;
+import com.pettrip.domain.enums.CourseStatus;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -27,6 +28,14 @@ public class Course {
     @OneToMany(mappedBy = "course", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Coordinate> coordinates; // 이 코스에 속한 좌표들
 
+    @ManyToMany
+    @JoinTable(
+            name = "course_tag_link",
+            joinColumns = @JoinColumn(name = "course_id"),
+            inverseJoinColumns = @JoinColumn(name = "course_tag_id")
+    )
+    private List<CourseTag> tags; // 코스에 연결된 태그들
+
     @Column
     private double distance; // 코스 거리
 
@@ -39,8 +48,9 @@ public class Course {
     @Column(length = 255)
     private String courseAddress; // 코스 주소
 
-    @Column
-    private int visibility; // 코스 공개 여부 (0: 비공개, 1: 공개 등)
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private CourseStatus status; // 코스 상태 (DELETE, PROTECTED, ACTIVE)
 
     @Column(length = 1000)
     private String courseDescription; // 코스 설명
