@@ -31,7 +31,8 @@ public enum SuccessStatus implements BaseCode {
     COURSE_CREATED_OK(HttpStatus.OK, 200, "코스 생성 성공!"),
     COURSE_UPDATED_OK(HttpStatus.OK, 200, "코스 수정 성공!"),
     COURSE_DELETED_OK(HttpStatus.OK, 200, "코스 삭제 성공!"),
-    COURSE_LIST_OK(HttpStatus.OK, 200, "코스 불러오기 성공!");
+    COURSE_LIST_OK(HttpStatus.OK, 200, "코스 불러오기 성공!"),
+    LIKE_SUCCESS(HttpStatus.OK, 200, "좋아요 성공!");
 
 
     private final HttpStatus httpStatus;

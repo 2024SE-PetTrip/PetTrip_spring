@@ -3,6 +3,7 @@ package com.pettrip.service.course;
 import com.pettrip.app.dto.course.CoordinateDTO;
 import com.pettrip.app.dto.course.CourseDTO;
 import com.pettrip.app.dto.course.CourseResponseDTO;
+import com.pettrip.app.dto.course.CourseSearchDTO;
 import com.pettrip.converter.CourseConverter;
 import com.pettrip.domain.User;
 import com.pettrip.domain.course.Coordinate;
@@ -20,6 +21,7 @@ import javax.xml.stream.Location;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class CourseService {
@@ -135,6 +137,14 @@ public class CourseService {
     public List<CourseResponseDTO> getAllCourses() {
         List<Course> courses = courseRepository.findAll();
         return CourseConverter.toCourseResponseDTOList(courses);
+    }
+
+    //searchCourses(searchDTO) (아직 구현 x)
+    public void increaseLikeCount(Long courseId) {
+        Course course = courseRepository.findById(courseId)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid course ID"));
+        course.setLikeCount(course.getLikeCount() + 1);
+        courseRepository.save(course);
     }
 
 }
