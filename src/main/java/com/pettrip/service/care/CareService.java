@@ -34,14 +34,12 @@ public interface CareService {
     // 돌봄 제공자가 요청을 수락하거나 매칭하는 기능
     CareResponseDTO.MatchCareProviderDTO matchCareProvider(Long requestId, Long providerId);
 
+    // 돌봄 요청 완료로 업데이트
     CareResponseDTO.UpdateCareDTO updateCareRequestAsCompleted(Long requestId);
 
     // 돌봄 서비스 완료 후 평가
     EvaluationResponseDTO addEvaluation(Long requestId, EvaluationRequestDTO requestDto);
 
+    // 사용자의 돌봄 평가 내역 불러오기
     List<EvaluationResponseDTO> getEvaluationsByUserId(Long providerId);
-
-
-    // 돌봄 요청자가 돌봄 제공자와 실시간 채팅 생성
-    // ChatRoom createChatRoom(Long requestId, Long providerId);
 }

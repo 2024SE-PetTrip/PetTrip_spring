@@ -31,7 +31,7 @@ public class Scheduler {
         }
     }
 
-    @Scheduled(fixedRate = 1000) // Executes every second
+    @Scheduled(fixedRate = 1000)
     public void updateCompletedCareRequests() {
         LocalDateTime now = LocalDateTime.now();
 
@@ -44,7 +44,7 @@ public class Scheduler {
         }
     }
 
-    @Scheduled(fixedRate = 1000) // Executes every second
+    @Scheduled(fixedRate = 1000)
     public void updateExpiredCareRequests() {
         LocalDateTime now = LocalDateTime.now();
 
@@ -57,7 +57,7 @@ public class Scheduler {
         }
     }
 
-    @Scheduled(fixedRate = 1000) // 1초마다 실행
+    @Scheduled(fixedRate = 1000)
     public void resetExpiredToPending() {
         LocalDateTime now = LocalDateTime.now();
 
