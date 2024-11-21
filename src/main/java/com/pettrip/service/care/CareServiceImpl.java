@@ -10,9 +10,11 @@ import com.pettrip.converter.CareConverter;
 import com.pettrip.domain.User;
 import com.pettrip.domain.care.CareRequest;
 import com.pettrip.domain.care.Evaluation;
+import com.pettrip.domain.care.Pet;
 import com.pettrip.domain.enums.CareRequestStatus;
 import com.pettrip.repository.CareRequestRepository;
 import com.pettrip.repository.EvaluationRepository;
+import com.pettrip.repository.PetRepository;
 import com.pettrip.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -20,6 +22,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -31,6 +34,8 @@ public class CareServiceImpl implements CareService {
 
     private final UserRepository userRepository;
 
+    private final PetRepository petRepository;
+
     private final EvaluationRepository evaluationRepository;
 
     @Override
@@ -39,8 +44,12 @@ public class CareServiceImpl implements CareService {
         User requester = userRepository.findById(careRequestDTO.getRequesterId())
                 .orElseThrow(() -> new AppHandler(ErrorStatus.NOT_FOUND_USER));
 
+        Pet pet = petRepository.findById(careRequestDTO.getPetId())
+                .orElseThrow(() -> new AppHandler(ErrorStatus.NOT_FOUND_PET));
+
         CareRequest careRequest = CareConverter.toCareRequest(careRequestDTO);
         careRequest.setRequester(requester);
+        careRequest.setPet(pet);
 
         careRequestRepository.save(careRequest);
 
@@ -65,8 +74,8 @@ public class CareServiceImpl implements CareService {
     }
 
     @Override
-    public List<CareResponseDTO.GetCareDTO> getCareRequestsByRequesterId(Long requesterId) {
-        List<CareRequest> careRequests = careRequestRepository.findByRequesterId(requesterId);
+    public List<CareResponseDTO.GetCareDTO> getCareRequestsByStatus(CareRequestStatus status) {
+        List<CareRequest> careRequests = careRequestRepository.findByStatus(status);
 
         return careRequests.stream()
                 .map(CareConverter::getCareDTO)
@@ -74,8 +83,18 @@ public class CareServiceImpl implements CareService {
     }
 
     @Override
-    public List<CareResponseDTO.GetCareDTO> getCareRequestsByStatus(CareRequestStatus status) {
-        List<CareRequest> careRequests = careRequestRepository.findByStatus(status);
+    public List<CareResponseDTO.GetCareDTO> getCareRequestsByFilter(String address, String breed) {
+        List<CareRequest> careRequests;
+
+        if (address != null && breed != null) {
+            careRequests = careRequestRepository.findByAddressAndBreed(address, breed);
+        } else if (address != null) {
+            careRequests = careRequestRepository.findByAddress(address);
+        } else if (breed != null) {
+            careRequests = careRequestRepository.findByPetBreed(breed);
+        } else {
+            careRequests = careRequestRepository.findAll();
+        }
 
         return careRequests.stream()
                 .map(CareConverter::getCareDTO)
@@ -91,16 +110,17 @@ public class CareServiceImpl implements CareService {
         CareRequest careRequest = careRequestRepository.findById(requestId)
                 .orElseThrow(() -> new AppHandler(ErrorStatus.NOT_FOUND_CARE_REQUEST));
 
-        // 상태가 PENDING이 아닐 경우 예외 처리
-        if (careRequest.getStatus() != CareRequestStatus.PENDING) {
-            throw new AppHandler(ErrorStatus.INVALID_STATUS_UPDATE);
-        }
+        Pet pet = petRepository.findById(careRequestDto.getPetId())
+                .orElseThrow(() -> new AppHandler(ErrorStatus.NOT_FOUND_PET));
 
+        careRequest.setTitle(careRequestDto.getTitle());
+        careRequest.setAddress(careRequestDto.getAddress());
         careRequest.setRequester(requester);
         careRequest.setStartDate(careRequestDto.getStartDate());
         careRequest.setEndDate(careRequestDto.getEndDate());
         careRequest.setRequestDescription(careRequestDto.getRequestDescription());
         careRequest.setRequestImageUrl(careRequestDto.getRequestImageUrl());
+        careRequest.setPet(pet);
 
         careRequestRepository.save(careRequest);
 
@@ -140,9 +160,21 @@ public class CareServiceImpl implements CareService {
     }
 
     @Override
+    public CareResponseDTO.UpdateCareDTO updateCareRequestAsCompleted(Long requestId) {
+        CareRequest careRequest = careRequestRepository.findById(requestId)
+                .orElseThrow(() -> new AppHandler(ErrorStatus.NOT_FOUND_CARE_REQUEST));
+
+        careRequest.setStatus(CareRequestStatus.COMPLETED);
+
+        careRequestRepository.save(careRequest);
+
+        return CareConverter.updateCareDTO(careRequest);
+    }
+
+    @Override
     @Transactional
-    public EvaluationResponseDTO addEvaluation(EvaluationRequestDTO requestDto) {
-        CareRequest careRequest = careRequestRepository.findById(requestDto.getCareRequestId())
+    public EvaluationResponseDTO addEvaluation(Long requestId, EvaluationRequestDTO requestDto) {
+        CareRequest careRequest = careRequestRepository.findById(requestId)
                 .orElseThrow(() -> new AppHandler(ErrorStatus.NOT_FOUND_CARE_REQUEST));
 
         if (!CareRequestStatus.COMPLETED.equals(careRequest.getStatus())) {
@@ -171,11 +203,13 @@ public class CareServiceImpl implements CareService {
 //        return CareConverter.toEvaluationResponseDTOList(evaluations);
 //    }
 
-    // 돌봄 제공자의 평가 내역을 모두 가져온다.
+    // 돌봄 제공자의 평가 내역을 가져온다.
     public List<EvaluationResponseDTO> getEvaluationsByUserId(Long providerId) {
         List<Evaluation> evaluations = evaluationRepository.findByProviderId(providerId);
 
-        return CareConverter.toEvaluationResponseDTOList(evaluations);
+        return evaluations.stream()
+                .map(CareConverter::toEvaluationResponseDTO)
+                .collect(Collectors.toList());
     }
 
 }

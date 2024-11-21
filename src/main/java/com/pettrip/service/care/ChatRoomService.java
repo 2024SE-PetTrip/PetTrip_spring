@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface ChatRoomService {
 
-    public ChatRoomResponseDTO getOrCreateChatRoom(ChatRoomRequestDTO chatRoomRequestDTO);
+    ChatRoomResponseDTO getOrCreateChatRoom(ChatRoomRequestDTO chatRoomRequestDTO);
 
-    List<ChatRoomResponseDTO> getUserChatRooms();
+    List<ChatRoomResponseDTO> getUserChatRooms(Long userId);
 }

@@ -3,7 +3,6 @@ package com.pettrip.app.controller;
 import com.pettrip.app.dto.care.ChatMessageDTO;
 import com.pettrip.domain.care.ChatMessage;
 import com.pettrip.service.care.ChatMessageService;
-import com.pettrip.service.care.ChatRoomService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.messaging.handler.annotation.MessageMapping;

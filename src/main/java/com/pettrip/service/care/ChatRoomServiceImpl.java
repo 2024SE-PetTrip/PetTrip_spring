@@ -4,6 +4,7 @@ import com.pettrip.apiPayload.code.status.ErrorStatus;
 import com.pettrip.apiPayload.exception.handler.AppHandler;
 import com.pettrip.app.dto.care.ChatRoomRequestDTO;
 import com.pettrip.app.dto.care.ChatRoomResponseDTO;
+import com.pettrip.converter.CareConverter;
 import com.pettrip.domain.User;
 import com.pettrip.domain.care.ChatRoom;
 import com.pettrip.repository.ChatRoomRepository;
@@ -12,8 +13,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -51,8 +52,12 @@ public class ChatRoomServiceImpl implements ChatRoomService {
     }
 
     @Override
-    public List<ChatRoomResponseDTO> getUserChatRooms() {
-        return List.of();
+    public List<ChatRoomResponseDTO> getUserChatRooms(Long userId) {
+        List<ChatRoom> chatRooms = chatRoomRepository.findAllByUserId(userId);
+
+        return chatRooms.stream()
+                .map(ChatRoom::toChatRoomResponseDTO)
+                .collect(Collectors.toList());
     }
 
 

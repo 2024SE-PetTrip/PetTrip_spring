@@ -35,7 +35,6 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
         // publish
         registry.setApplicationDestinationPrefixes("/pub");
 
-
     }
 //
 //    @Override

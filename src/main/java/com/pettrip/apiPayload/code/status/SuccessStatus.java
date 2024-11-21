@@ -21,6 +21,7 @@ public enum SuccessStatus implements BaseCode {
     CARE_REQUEST_UPDATED(HttpStatus.OK, 200, "돌봄 요청 업데이트 성공"),
     CARE_REQUEST_DELETED(HttpStatus.OK, 200, "돌봄 요청 삭제 성공"),
     CARE_PROVIDER_MATCHED(HttpStatus.OK, 200, "돌봄 매칭 성공"),
+    CARE_REQUEST_COMPLETED(HttpStatus.OK, 200, "돌봄 완료 변경 성공"),
     CARE_EVALUATION_OK(HttpStatus.OK, 200, "돌봄 평가 완료"),
     CARE_EVALUATION_LIST_OK(HttpStatus.OK, 200, "돌봄 제공자의 평가 내역 조회 성공"),
 

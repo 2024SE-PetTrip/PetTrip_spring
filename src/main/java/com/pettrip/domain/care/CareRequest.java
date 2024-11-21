@@ -32,6 +32,12 @@ public class CareRequest extends BaseEntity {
     private User provider;
 
     @Column(nullable = false)
+    private String title;
+
+    @Column(nullable = false)
+    private String address;
+
+    @Column(nullable = false)
     private LocalDateTime startDate;
 
     @Column(nullable = false)
@@ -42,6 +48,10 @@ public class CareRequest extends BaseEntity {
 
     @Column(length = 255)
     private String requestImageUrl;
+
+    @ManyToOne
+    @JoinColumn(name = "pet_id", nullable = false)
+    private Pet pet;
 
     @Setter
     @Enumerated(EnumType.STRING)

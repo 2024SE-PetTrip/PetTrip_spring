@@ -18,6 +18,8 @@ public class CareConverter {
 
     public static CareRequest toCareRequest(CareRequestDTO dto) {
         return CareRequest.builder()
+                .title(dto.getTitle())
+                .address(dto.getAddress())
                 .startDate(dto.getStartDate())
                 .endDate(dto.getEndDate())
                 .requestDescription(dto.getRequestDescription())
