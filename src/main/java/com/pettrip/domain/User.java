@@ -31,7 +31,7 @@ public class User extends BaseEntity {
     @Column(nullable = false, length = 50, unique = true)
     private String username;    //로그인시 사용할 아이디이자 이메일
 
-    @Column(nullable = false, length = 50)
+    @Column(nullable = false, length = 255)
     private String password;    //비밀번호, 저장시 암호화하여 저장
 
     @Column(length = 255)
