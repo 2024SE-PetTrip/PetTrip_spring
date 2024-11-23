@@ -39,6 +39,10 @@ public class CareConverter {
     public static CareResponseDTO.GetCareDTO getCareDTO(CareRequest careRequest) {
         return CareResponseDTO.GetCareDTO.builder()
                 .requestId(careRequest.getRequestId())
+                .title(careRequest.getTitle())
+                .address(careRequest.getAddress())
+                .petId(careRequest.getPet().getPetId())
+                .requestImageUrl(careRequest.getRequestImageUrl())
                 .build();
     }
 
@@ -47,6 +51,9 @@ public class CareConverter {
         return CareResponseDTO.GetCareDetailDTO.builder()
                 .requestId(careRequest.getRequestId())
                 .requesterId(careRequest.getRequester().getId()) //돌봄 요청자 DTO
+                .title(careRequest.getTitle())
+                .address(careRequest.getAddress())
+                .petId(careRequest.getPet().getPetId())
                 .startDate(careRequest.getStartDate())
                 .endDate(careRequest.getEndDate())
                 .requestDescription(careRequest.getRequestDescription())
@@ -82,12 +89,6 @@ public class CareConverter {
                 .rating(evaluation.getRating())
                 .feedback(evaluation.getFeedback())
                 .build();
-    }
-
-    public static List<EvaluationResponseDTO> toEvaluationResponseDTOList(List<Evaluation> evaluations) {
-        return evaluations.stream()
-                .map(CareConverter::toEvaluationResponseDTO)
-                .collect(Collectors.toList());
     }
 
     public static ChatMessage toChatMessage(ChatMessageDTO dto) {

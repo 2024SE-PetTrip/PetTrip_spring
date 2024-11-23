@@ -21,6 +21,10 @@ public class CareResponseDTO {
     @Builder
     public static class GetCareDTO {
         private Long requestId;
+        private String title;
+        private Long petId;
+        private String address;
+        private String requestImageUrl;
     }
 
     @Getter
@@ -29,10 +33,13 @@ public class CareResponseDTO {
         private Long requestId;
         private Long requesterId;
         private Long providerId;
+        private String title;
+        private String address;
         private LocalDateTime startDate;
         private LocalDateTime endDate;
         private String requestDescription;
         private String requestImageUrl;
+        private Long petId;
         private CareRequestStatus status;
     }
 
