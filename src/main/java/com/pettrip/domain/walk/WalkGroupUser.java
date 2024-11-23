@@ -26,6 +26,6 @@ public class WalkGroupUser {
     private User user; // 어떤 유저인지 참조
 
     @Column(nullable = false)
-    private boolean isApproved; // 참가 승인 여부 (모임 생성자가 승인한 경우 true)
+    private boolean isApproved; // 참가 승인 여부 (0이면 참가 신청자, 1이면 멤버)
 
 }

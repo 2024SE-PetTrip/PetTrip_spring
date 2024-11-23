@@ -95,5 +95,27 @@ public class WalkGroupServiceImpl implements WalkGroupService {
         return WalkGroupConverter.walkGroupUserResponseDTO(walkGroupUser);
     }
 
+    @Override
+    public void acceptApplicant(Long walkGroupId, Long userId) {
+        WalkGroupUser applicant = walkGroupUserRepository.findByGroup_GroupIdAndUser_IdAndIsApproved(walkGroupId, userId, false)
+                .orElseThrow(() -> new AppHandler(ErrorStatus.NOT_FOUND_WALK_GROUP_APPLICANTS));
+        applicant.setApproved(true);
+        walkGroupUserRepository.save(applicant);
+    }
+
+    @Override
+    public void rejectApplicant(Long walkGroupId, Long userId) {
+        WalkGroupUser applicant = walkGroupUserRepository.findByGroup_GroupIdAndUser_IdAndIsApproved(walkGroupId, userId, false)
+                .orElseThrow(() -> new AppHandler(ErrorStatus.NOT_FOUND_WALK_GROUP_APPLICANTS));
+        walkGroupUserRepository.delete(applicant);
+    }
+
+    @Override
+    public void removeMember(Long walkGroupId, Long userId) {
+        WalkGroupUser member = walkGroupUserRepository.findByGroup_GroupIdAndUser_IdAndIsApproved(walkGroupId, userId, true)
+                .orElseThrow(() -> new AppHandler(ErrorStatus.NOT_FOUND_WALK_GROUP_MEMBER));
+        walkGroupUserRepository.delete(member); // 멤버 삭제
+    }
+
 }
 
