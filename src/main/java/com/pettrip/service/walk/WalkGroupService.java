@@ -12,4 +12,6 @@ public interface WalkGroupService {
     List<WalkGroupResponseDTO.GetGroupDTO> getAllWalkGroup();
 
     WalkGroupResponseDTO.GetGroupDetailDTO getWalkGroupById(Long walkGroupId);
+
+    WalkGroupResponseDTO.GetGroupDetailFromCreatorDTO getGroupDetailFromCreator(Long walkGroupId, Long creatorId);
 }

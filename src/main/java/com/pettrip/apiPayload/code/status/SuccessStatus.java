@@ -18,7 +18,7 @@ public enum SuccessStatus implements BaseCode {
     WALK_GROUP_REQUEST_OK(HttpStatus.OK, 200, "산책 모임 요청 생성 성공"),
     WALK_GROUP_LIST_OK(HttpStatus.OK, 200, "산책 모임 리스트 조회 성공"),
     WALK_GROUP_DETAIL_OK(HttpStatus.OK, 200, "산책 모임 상세 조회 성공"),
-
+    WALK_GROUP_CREATOR_DETAIL_OK(HttpStatus.OK, 200, "산책 모임 작성자 시점 상세 조회 성공"),
     //돌봄
     CARE_REQUEST_OK(HttpStatus.OK, 200, "돌봄 요청 생성 성공"),
     CARE_REQUEST_LIST_OK(HttpStatus.OK, 200, "돌봄 요청 리스트 조회 성공"),

@@ -37,4 +37,14 @@ public class WalkController {
         return ApiResponse.of(SuccessStatus.WALK_GROUP_DETAIL_OK, walkGroupById);
     }
 
+    @GetMapping("/{walkGroupId}/creator-detail")
+    public ApiResponse<WalkGroupResponseDTO.GetGroupDetailFromCreatorDTO> getGroupDetailFromCreator(
+            @PathVariable Long walkGroupId,
+            @RequestParam Long creatorId) {
+        WalkGroupResponseDTO.GetGroupDetailFromCreatorDTO walkGroupById =
+                walkGroupService.getGroupDetailFromCreator(walkGroupId, creatorId);
+
+        return ApiResponse.of(SuccessStatus.WALK_GROUP_CREATOR_DETAIL_OK, walkGroupById);
+    }
+
 }

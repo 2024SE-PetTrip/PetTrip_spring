@@ -68,5 +68,16 @@ public class WalkGroupServiceImpl implements WalkGroupService {
         return WalkGroupConverter.getGroupDetailDTO(walkGroup);
     }
 
+    public WalkGroupResponseDTO.GetGroupDetailFromCreatorDTO getGroupDetailFromCreator(Long walkGroupId, Long creatorId) {
+        WalkGroup walkGroup = walkGroupRepository.findById(walkGroupId)
+                .orElseThrow(() -> new AppHandler(ErrorStatus.NOT_FOUND_WALK_GROUP));
+
+        if (!walkGroup.getCreator().getId().equals(creatorId)) {
+            throw new AppHandler(ErrorStatus.NOT_GROUP_CREATOR);
+        }
+
+        return WalkGroupConverter.getGroupDetailFromCreatorDTO(walkGroup);
+    }
+
 }
 
