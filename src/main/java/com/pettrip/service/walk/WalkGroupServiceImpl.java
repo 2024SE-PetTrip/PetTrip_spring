@@ -4,6 +4,7 @@ import com.pettrip.apiPayload.code.status.ErrorStatus;
 import com.pettrip.apiPayload.exception.handler.AppHandler;
 import com.pettrip.app.dto.walk.WalkGroupRequestDTO;
 import com.pettrip.app.dto.walk.WalkGroupResponseDTO;
+import com.pettrip.converter.CareConverter;
 import com.pettrip.converter.WalkGroupConverter;
 import com.pettrip.domain.User;
 import com.pettrip.domain.walk.WalkGroup;
@@ -48,5 +49,24 @@ public class WalkGroupServiceImpl implements WalkGroupService {
 
         return WalkGroupConverter.addGroupDTO(walkGroup);
     }
+
+
+    @Override
+    public List<WalkGroupResponseDTO.GetGroupDTO> getAllWalkGroup() {
+        List<WalkGroup> walkGroups = walkGroupRepository.findAll();
+
+        return walkGroups.stream()
+                .map(WalkGroupConverter::getGroupDTO)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public WalkGroupResponseDTO.GetGroupDetailDTO getWalkGroupById(Long walkGroupId) {
+        WalkGroup walkGroup = walkGroupRepository.findById(walkGroupId)
+                .orElseThrow(() -> new AppHandler(ErrorStatus.NOT_FOUND_WALK_GROUP));
+
+        return WalkGroupConverter.getGroupDetailDTO(walkGroup);
+    }
+
 }
 
