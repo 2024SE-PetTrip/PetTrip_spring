@@ -56,5 +56,4 @@ public class CourseController {
         return ApiResponse.of(SuccessStatus.LIKE_SUCCESS, newLikeCount);
     }
 
-
 }

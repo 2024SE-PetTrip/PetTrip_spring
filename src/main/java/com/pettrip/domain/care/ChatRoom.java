@@ -1,5 +1,6 @@
 package com.pettrip.domain.care;
 
+import com.pettrip.app.dto.care.ChatRoomResponseDTO;
 import com.pettrip.domain.User;
 import com.pettrip.domain.common.BaseEntity;
 import lombok.*;
@@ -49,5 +50,24 @@ public class ChatRoom extends BaseEntity {
     public void addMembers(User roomMaker, User guest) {
         this.chatRoomMembers.add(roomMaker);
         this.chatRoomMembers.add(guest);
+    }
+
+    public static ChatRoomResponseDTO toChatRoomResponseDTO(ChatRoom chatRoom) {
+        Long roomMakerId = chatRoom.getChatRoomMembers().stream()
+                .findFirst()
+                .map(User::getId)
+                .orElse(null);
+
+        Long guestId = chatRoom.getChatRoomMembers().stream()
+                .skip(1)
+                .map(User::getId)
+                .findFirst()
+                .orElse(null);
+
+        return ChatRoomResponseDTO.builder()
+                .chatRoomId(chatRoom.getId())
+                .roomMakerId(roomMakerId)
+                .guestId(guestId)
+                .build();
     }
 }

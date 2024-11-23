@@ -7,25 +7,57 @@ import java.time.LocalDateTime;
 
 @Getter
 @Setter
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @Builder
 public class CareResponseDTO {
 
-    private Long requestId;
+    @Getter
+    @Builder
+    public static class AddCareDTO {
+        private Long requestId;
+    }
 
-    private Long requesterId;
+    @Getter
+    @Builder
+    public static class GetCareDTO {
+        private Long requestId;
+        private String title;
+        private Long petId;
+        private String address;
+        private String requestImageUrl;
+    }
 
-    private LocalDateTime startDate;
+    @Getter
+    @Builder
+    public static class GetCareDetailDTO {
+        private Long requestId;
+        private Long requesterId;
+        private Long providerId;
+        private String title;
+        private String address;
+        private LocalDateTime startDate;
+        private LocalDateTime endDate;
+        private String requestDescription;
+        private String requestImageUrl;
+        private Long petId;
+        private CareRequestStatus status;
+    }
 
-    private LocalDateTime endDate;
+    @Getter
+    @Builder
+    public static class UpdateCareDTO {
+        private Long requestId;
+        private LocalDateTime updatedAt;
+        private CareRequestStatus status;
+    }
 
-    private String requestDescription;
-
-    private String requestImageUrl;
-
-    private CareRequestStatus status;
-
-    private Long providerId;
+    @Getter
+    @Builder
+    public static class MatchCareProviderDTO {
+        private Long requestId;
+        private Long requesterId;
+        private Long providerId;
+        private CareRequestStatus status;
+    }
 }
 

@@ -22,4 +22,3 @@ public class CourseDTO {
         private String province; // 광역시/도
         private String city; // 시/군/구
 }
-

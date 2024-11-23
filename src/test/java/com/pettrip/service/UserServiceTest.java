@@ -20,7 +20,7 @@ class UserServiceTest {
         joinDTO.setNickname("tst3");
         joinDTO.setUsername("Tester3@google.com");
         joinDTO.setPassword("p333");
-        joinDTO.setUserAddress("seoul");
+        joinDTO.setAddress("seoul junggu");
 
         User user = User.toUser(joinDTO);
 
@@ -38,6 +38,6 @@ class UserServiceTest {
         assertThat(user.getNickname()).isEqualTo("tst3");
         assertThat(user.getUsername()).isEqualTo("Tester3@google.com");
         assertThat(user.getPassword()).isEqualTo("p333");
-        assertThat(user.getAddress()).isEqualTo("seoul");
+        assertThat(user.getAddress()).isEqualTo("seoul junggu");
     }
 }

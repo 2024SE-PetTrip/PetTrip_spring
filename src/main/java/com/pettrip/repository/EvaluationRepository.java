@@ -7,9 +7,6 @@ import org.springframework.data.jpa.repository.Query;
 import java.util.List;
 
 public interface EvaluationRepository extends JpaRepository<Evaluation, Long> {
-    @Query("SELECT e FROM Evaluation e WHERE e.careRequest.requester.id = :requesterId AND e.careRequest.provider.id = :providerId")
-    List<Evaluation> findByRequesterIdAndProviderId(Long requesterId, Long providerId);
-
     @Query("SELECT e FROM Evaluation e WHERE e.careRequest.provider.id = :providerId")
     List<Evaluation> findByProviderId(Long providerId);
 }

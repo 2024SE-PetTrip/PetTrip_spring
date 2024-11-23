@@ -21,9 +21,10 @@ public class ChatRoomController {
         return chatRoomService.getOrCreateChatRoom(chatRoomRequestDTO);
     }
 
-    @GetMapping("/personal/myChatRooms")
-    public List<ChatRoomResponseDTO> getUserChatRooms() {
-        return chatRoomService.getUserChatRooms();
+    @GetMapping("/{userId}/myChatRooms")
+    public List<ChatRoomResponseDTO> getUserChatRooms(
+            @PathVariable Long userId) {
+        return chatRoomService.getUserChatRooms(userId);
     }
 
 }

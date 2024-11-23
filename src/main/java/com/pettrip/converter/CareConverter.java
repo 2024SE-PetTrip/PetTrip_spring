@@ -18,6 +18,8 @@ public class CareConverter {
 
     public static CareRequest toCareRequest(CareRequestDTO dto) {
         return CareRequest.builder()
+                .title(dto.getTitle())
+                .address(dto.getAddress())
                 .startDate(dto.getStartDate())
                 .endDate(dto.getEndDate())
                 .requestDescription(dto.getRequestDescription())
@@ -26,11 +28,32 @@ public class CareConverter {
                 .build();
     }
 
-    // CareRequest 엔티티를 CareResponseDTO로 변환 (상세 정보)
-    public static CareResponseDTO toCareResponseDTO(CareRequest careRequest) {
-        return CareResponseDTO.builder()
+    // CareRequest 추가 응답 dto
+    public static CareResponseDTO.AddCareDTO addCareDTO(CareRequest careRequest) {
+        return CareResponseDTO.AddCareDTO.builder()
+                .requestId(careRequest.getRequestId())
+                .build();
+    }
+
+    // CareRequest 조회 응답 dto
+    public static CareResponseDTO.GetCareDTO getCareDTO(CareRequest careRequest) {
+        return CareResponseDTO.GetCareDTO.builder()
+                .requestId(careRequest.getRequestId())
+                .title(careRequest.getTitle())
+                .address(careRequest.getAddress())
+                .petId(careRequest.getPet().getPetId())
+                .requestImageUrl(careRequest.getRequestImageUrl())
+                .build();
+    }
+
+    // CareRequest 상세 조회 응답 dto
+    public static CareResponseDTO.GetCareDetailDTO getCareDetailDTO(CareRequest careRequest) {
+        return CareResponseDTO.GetCareDetailDTO.builder()
                 .requestId(careRequest.getRequestId())
                 .requesterId(careRequest.getRequester().getId()) //돌봄 요청자 DTO
+                .title(careRequest.getTitle())
+                .address(careRequest.getAddress())
+                .petId(careRequest.getPet().getPetId())
                 .startDate(careRequest.getStartDate())
                 .endDate(careRequest.getEndDate())
                 .requestDescription(careRequest.getRequestDescription())
@@ -40,13 +63,24 @@ public class CareConverter {
                 .build();
     }
 
-    // CareRequest 엔티티 리스트를 CareResponseDTO 리스트로 변환 (리스트 조회용)
-    public static List<CareResponseDTO> toCareResponseDTOList(List<CareRequest> careRequests) {
-        return careRequests.stream()
-                .map(CareConverter::toCareResponseDTO)
-                .collect(Collectors.toList());
+    // CareRequest 업데이트 응답 dto
+    public static CareResponseDTO.UpdateCareDTO updateCareDTO(CareRequest careRequest) {
+        return CareResponseDTO.UpdateCareDTO.builder()
+                .requestId(careRequest.getRequestId())
+                .updatedAt(careRequest.getUpdatedAt())
+                .status(careRequest.getStatus())
+                .build();
     }
 
+    // CareRequest 매칭 응답 dto
+    public static CareResponseDTO.MatchCareProviderDTO matchCareProviderDTO(CareRequest careRequest) {
+        return CareResponseDTO.MatchCareProviderDTO.builder()
+                .requestId(careRequest.getRequestId())
+                .requesterId(careRequest.getRequester().getId())
+                .providerId(careRequest.getProvider().getId())
+                .status(careRequest.getStatus())
+                .build();
+    }
 
     public static EvaluationResponseDTO toEvaluationResponseDTO(Evaluation evaluation) {
         return EvaluationResponseDTO.builder()
@@ -55,12 +89,6 @@ public class CareConverter {
                 .rating(evaluation.getRating())
                 .feedback(evaluation.getFeedback())
                 .build();
-    }
-
-    public static List<EvaluationResponseDTO> toEvaluationResponseDTOList(List<Evaluation> evaluations) {
-        return evaluations.stream()
-                .map(CareConverter::toEvaluationResponseDTO)
-                .collect(Collectors.toList());
     }
 
     public static ChatMessage toChatMessage(ChatMessageDTO dto) {

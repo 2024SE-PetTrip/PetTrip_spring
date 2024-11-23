@@ -29,7 +29,12 @@ public enum ErrorStatus implements BaseErrorCode {
     REGISTER_PASSWORD_EMPTY(HttpStatus.BAD_REQUEST, 41008, "비밀번호를 입력해주세요."),
     REGISTER_PASSWORD_TOO_LONG(HttpStatus.BAD_REQUEST, 41009, "비밀번호는 최대 70자입니다."),
 
+    NOT_FOUND_WALK_GROUP_TAG(HttpStatus.BAD_REQUEST, 40301, "존재하지 않은 산책 그룹 태그입니다."),
+    NOT_FOUND_WALK_GROUP(HttpStatus.BAD_REQUEST, 40302, "존재하지 않은 산책 그룹입니다."),
+    NOT_GROUP_CREATOR(HttpStatus.BAD_REQUEST, 40303, "산책 모임 모집의 작성자가 아닙니다"),
+
     NOT_FOUND_USER(HttpStatus.BAD_REQUEST, 40401, "존재하지 않는 회원입니다."),
+    NOT_FOUND_PET(HttpStatus.BAD_REQUEST, 40402, "존재하지 않는 반려동물입니다."),
     NOT_FOUND_CARE_REQUEST(HttpStatus.BAD_REQUEST, 40404, "존재하지 않는 돌봄요청입니다."),
     INVALID_MATCH_STATUS(HttpStatus.BAD_REQUEST, 40405, "돌봄 서비스를 매칭할 수 없습니다."),
     INVALID_EVALUATION_STATUS(HttpStatus.BAD_REQUEST, 40406, "돌봄 서비스를 평가할 수 없습니다."),

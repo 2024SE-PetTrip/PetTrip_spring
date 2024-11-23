@@ -8,8 +8,6 @@ import lombok.*;
 @AllArgsConstructor
 public class EvaluationRequestDTO {
 
-    private Long careRequestId;
-
     private Integer rating;
 
     private String feedback;

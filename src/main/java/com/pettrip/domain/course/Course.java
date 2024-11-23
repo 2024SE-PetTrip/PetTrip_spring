@@ -110,4 +110,5 @@ public class Course {
             return "시간 정보 없음";
         }
     }
+
 }

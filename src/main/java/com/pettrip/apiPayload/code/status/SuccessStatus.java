@@ -14,6 +14,12 @@ public enum SuccessStatus implements BaseCode {
     _OK(HttpStatus.OK, 200, "성공입니다."),
 
     // 모임 관련
+
+    WALK_GROUP_REQUEST_OK(HttpStatus.OK, 200, "산책 모임 요청 생성 성공"),
+    WALK_GROUP_LIST_OK(HttpStatus.OK, 200, "산책 모임 리스트 조회 성공"),
+    WALK_GROUP_DETAIL_OK(HttpStatus.OK, 200, "산책 모임 상세 조회 성공"),
+    WALK_GROUP_CREATOR_DETAIL_OK(HttpStatus.OK, 200, "산책 모임 작성자 시점 상세 조회 성공"),
+    WALK_GROUP_JOIN_REQUEST_OK(HttpStatus.OK, 200, "산책 모임 참가 신청 성공"),
     //돌봄
     CARE_REQUEST_OK(HttpStatus.OK, 200, "돌봄 요청 생성 성공"),
     CARE_REQUEST_LIST_OK(HttpStatus.OK, 200, "돌봄 요청 리스트 조회 성공"),
@@ -21,6 +27,7 @@ public enum SuccessStatus implements BaseCode {
     CARE_REQUEST_UPDATED(HttpStatus.OK, 200, "돌봄 요청 업데이트 성공"),
     CARE_REQUEST_DELETED(HttpStatus.OK, 200, "돌봄 요청 삭제 성공"),
     CARE_PROVIDER_MATCHED(HttpStatus.OK, 200, "돌봄 매칭 성공"),
+    CARE_REQUEST_COMPLETED(HttpStatus.OK, 200, "돌봄 완료 변경 성공"),
     CARE_EVALUATION_OK(HttpStatus.OK, 200, "돌봄 평가 완료"),
     CARE_EVALUATION_LIST_OK(HttpStatus.OK, 200, "돌봄 제공자의 평가 내역 조회 성공"),
 
@@ -58,7 +65,6 @@ public enum SuccessStatus implements BaseCode {
                 .code(code)
                 .isSuccess(true)
                 .httpStatus(httpStatus)
-                .build()
-                ;
+                .build();
     }
 }

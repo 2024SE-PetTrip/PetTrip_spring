@@ -13,7 +13,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Map;
 
 @RestController
 @RequestMapping("/care")
@@ -23,35 +22,29 @@ public class CareController {
     private final CareService careService;
 
     @PostMapping("/add")
-    public ApiResponse<CareResponseDTO> addCareRequest(@RequestBody CareRequestDTO careRequestDTO) {
-        CareResponseDTO careResponseDTO = careService.createCareRequest(careRequestDTO);
-        return ApiResponse.of(SuccessStatus.CARE_REQUEST_OK, careResponseDTO);
+    public ApiResponse<CareResponseDTO.AddCareDTO> addCareRequest(@RequestBody CareRequestDTO careRequestDTO) {
+        CareResponseDTO.AddCareDTO care = careService.createCareRequest(careRequestDTO);
+        return ApiResponse.of(SuccessStatus.CARE_REQUEST_OK, care);
     }
 
     @GetMapping("/all")
-    public ApiResponse<List<CareResponseDTO>> getAllCareRequests() {
-        List<CareResponseDTO> allCareRequest = careService.getAllCareRequest();
+    public ApiResponse<List<CareResponseDTO.GetCareDTO>> getAllCareRequests() {
+        List<CareResponseDTO.GetCareDTO> allCareRequest = careService.getAllCareRequest();
         return ApiResponse.of(SuccessStatus.CARE_REQUEST_LIST_OK, allCareRequest);
     }
 
+    // Care 요청 상세 조회
     @GetMapping("/{requestId}")
-    public ApiResponse<CareResponseDTO> getCareRequestById(@PathVariable("requestId") Long requestId) {
-        CareResponseDTO careResponseDTO = careService.getCareRequestById(requestId);
+    public ApiResponse<CareResponseDTO.GetCareDetailDTO> getCareRequestById(@PathVariable("requestId") Long requestId) {
+        CareResponseDTO.GetCareDetailDTO careResponseDTO = careService.getCareRequestById(requestId);
         return ApiResponse.of(SuccessStatus.CARE_REQUEST_DETAIL_OK, careResponseDTO);
     }
 
-    @GetMapping("/users/{userId}")
-    public ApiResponse<List<CareResponseDTO>> getCareRequestsByUserId(@PathVariable("userId") Long userId) {
-        List<CareResponseDTO> CareRequestsByUserId = careService.getCareRequestsByRequesterId(userId);
-
-        return ApiResponse.of(SuccessStatus.CARE_REQUEST_LIST_OK, CareRequestsByUserId);
-    }
-
     @GetMapping("/status")
-    public ApiResponse<List<CareResponseDTO>> getCareRequestsByStatus(
+    public ApiResponse<List<CareResponseDTO.GetCareDTO>> getCareRequestsByStatus(
             @RequestParam(value = "status", required = false) CareRequestStatus status) {
 
-        List<CareResponseDTO> careRequestsByStatus;
+        List<CareResponseDTO.GetCareDTO> careRequestsByStatus;
 
         if (status == null) {
             careRequestsByStatus = careService.getAllCareRequest();
@@ -62,15 +55,21 @@ public class CareController {
         return ApiResponse.of(SuccessStatus.CARE_REQUEST_LIST_OK, careRequestsByStatus);
     }
 
+    @GetMapping("/filter")
+    public ApiResponse<List<CareResponseDTO.GetCareDTO>> getCareRequestsByFilter(
+            @RequestParam(value = "address", required = false) String address,
+            @RequestParam(value = "breed", required = false) String breed) {
+
+        List<CareResponseDTO.GetCareDTO> careRequests = careService.getCareRequestsByFilter(address, breed);
+        return ApiResponse.of(SuccessStatus.CARE_REQUEST_LIST_OK, careRequests);
+    }
 
     @PutMapping("/{requestId}/update")
-    public ApiResponse<CareResponseDTO> updateCareRequest(
+    public ApiResponse<CareResponseDTO.UpdateCareDTO> updateCareRequest(
             @PathVariable("requestId") Long requestId,
-            @RequestBody CareRequestDTO careRequestDTO) {
-
-        CareResponseDTO updatedCareRequest = careService.updateCareRequest(requestId, careRequestDTO);
-
-        return ApiResponse.of(SuccessStatus.CARE_REQUEST_UPDATED, updatedCareRequest);
+            @RequestBody CareRequestDTO requestDto) {
+        CareResponseDTO.UpdateCareDTO updateCareDTO = careService.updateCareRequest(requestId, requestDto);
+        return ApiResponse.of(SuccessStatus.CARE_REQUEST_UPDATED, updateCareDTO);
     }
 
     @DeleteMapping("/{requestId}/delete")
@@ -79,29 +78,35 @@ public class CareController {
         return ApiResponse.of(SuccessStatus.CARE_REQUEST_DELETED, null);
     }
 
-    @PutMapping("/{requestId}/match")
-    public ApiResponse<CareResponseDTO> matchCareProvider(
+    @PutMapping("/{requestId}/match/{providerId}")
+    public ApiResponse<CareResponseDTO.MatchCareProviderDTO> matchCareProvider(
             @PathVariable("requestId") Long requestId,
-            @RequestBody Map<String, Long> requestBody) {
-
-        Long providerId = requestBody.get("providerId");
-        CareResponseDTO careResponseDTO = careService.matchCareProvider(requestId, providerId);
+            @PathVariable("providerId") Long providerId) {
+        CareResponseDTO.MatchCareProviderDTO careResponseDTO = careService.matchCareProvider(requestId, providerId);
         return ApiResponse.of(SuccessStatus.CARE_PROVIDER_MATCHED, careResponseDTO);
     }
 
-    @PostMapping("/evaluation")
+    @PutMapping("/{requestId}/complete")
+    public ApiResponse<CareResponseDTO.UpdateCareDTO> completeCareRequest(@PathVariable("requestId") Long requestId) {
+        CareResponseDTO.UpdateCareDTO updatedCareRequest = careService.updateCareRequestAsCompleted(requestId);
+        return ApiResponse.of(SuccessStatus.CARE_REQUEST_COMPLETED, updatedCareRequest);
+    }
+
+    @PostMapping("/{requestId}/evaluate")
     public ApiResponse<EvaluationResponseDTO> evaluateCareProvider(
+            @PathVariable("requestId") Long requestId,
             @RequestBody EvaluationRequestDTO requestDto) {
-        EvaluationResponseDTO evaluationResponseDto = careService.addEvaluation(requestDto);
+        EvaluationResponseDTO evaluationResponseDto = careService.addEvaluation(requestId, requestDto);
         return ApiResponse.of(SuccessStatus.CARE_EVALUATION_OK, evaluationResponseDto);
     }
 
-    @GetMapping("/evaluation/{providerId}")
-    public ApiResponse<List<EvaluationResponseDTO>> getAllEvaluationByProvider(
-            @PathVariable Long providerId) {
+    @GetMapping("/evaluate/{userId}")
+    public ApiResponse<List<EvaluationResponseDTO>> getEvaluationsByUser(
+            @PathVariable Long userId) {
 
-        List<EvaluationResponseDTO> allEvaluation = careService.getEvaluationsByUserId(providerId);
+        List<EvaluationResponseDTO> evaluations = careService.getEvaluationsByUserId(userId);
 
-        return ApiResponse.of(SuccessStatus.CARE_EVALUATION_LIST_OK, allEvaluation);
+        return ApiResponse.of(SuccessStatus.CARE_EVALUATION_LIST_OK, evaluations);
     }
+
 }

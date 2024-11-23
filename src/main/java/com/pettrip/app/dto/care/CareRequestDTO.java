@@ -12,6 +12,10 @@ public class CareRequestDTO {
 
     private Long requesterId;
 
+    private String title;
+
+    private String address;
+
     private LocalDateTime startDate;
 
     private LocalDateTime endDate;
@@ -19,4 +23,7 @@ public class CareRequestDTO {
     private String requestDescription;
 
     private String requestImageUrl;
+
+    private Long petId;
+
 }

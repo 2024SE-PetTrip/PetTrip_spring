@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface ChatRoomRepository extends JpaRepository<ChatRoom, String> {
@@ -13,4 +14,7 @@ public interface ChatRoomRepository extends JpaRepository<ChatRoom, String> {
             "WHERE m1 = :roomMaker AND m2 = :guest")
     Optional<ChatRoom> findByChatRoomMembersContaining(@Param("roomMaker") User roomMaker,
                                                        @Param("guest") User guest);
+
+    @Query("SELECT cr FROM ChatRoom cr JOIN cr.chatRoomMembers m WHERE m.id = :userId")
+    List<ChatRoom> findAllByUserId(@Param("userId") Long userId);
 }
