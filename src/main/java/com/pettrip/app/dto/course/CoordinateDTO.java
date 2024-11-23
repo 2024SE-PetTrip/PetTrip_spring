@@ -6,10 +6,7 @@ import java.util.List;
 @Getter
 @Setter
 public class CoordinateDTO {
-    private int sequence;
     private double latitude;
     private double longitude;
-
-
 }
 
