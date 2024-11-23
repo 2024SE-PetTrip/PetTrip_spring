@@ -10,13 +10,11 @@ import com.pettrip.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.time.LocalDateTime;
 
 @Service
 public class CourseCommentService {
-
-    @Autowired
-    private CourseCommentRepository courseCommentRepository;
 
     @Autowired
     private CourseRepository courseRepository;
@@ -24,10 +22,15 @@ public class CourseCommentService {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private CourseCommentRepository courseCommentRepository;
+
     // 댓글 추가
-    public CommentAddResponseDTO addComment(Long courseId, CommentAddRequestDTO requestDTO) {
+    @Transactional
+    public void addComment(Long courseId, CommentAddRequestDTO requestDTO) {
         Course course = courseRepository.findById(courseId)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid course ID"));
+
         User user = userRepository.findById(requestDTO.getUserId())
                 .orElseThrow(() -> new IllegalArgumentException("Invalid user ID"));
 
@@ -38,40 +41,27 @@ public class CourseCommentService {
         comment.setCreatedDate(LocalDateTime.now());
         comment.setUpdatedDate(LocalDateTime.now());
 
-        CourseComment savedComment = courseCommentRepository.save(comment);
-
-        return new CommentAddResponseDTO(
-                savedComment.getUser().getId(), // User 클래스의 필드에 맞게 수정
-                savedComment.getCourse().getCourseId(),
-                savedComment.getCommentContent(),
-                savedComment.getCreatedDate(),
-                savedComment.getUpdatedDate()
-        );
+        courseCommentRepository.save(comment);
     }
 
     // 댓글 수정
-    public CommentUpdateResponseDTO updateComment(CommentUpdateRequestDTO requestDTO) {
-        CourseComment comment = courseCommentRepository.findById(requestDTO.getCourseId())
+    @Transactional
+    public void updateComment(Long commentId, CommentUpdateRequestDTO requestDTO) {
+        CourseComment comment = courseCommentRepository.findById(commentId)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid comment ID"));
 
         comment.setCommentContent(requestDTO.getCommentContent());
         comment.setUpdatedDate(LocalDateTime.now());
 
-        CourseComment updatedComment = courseCommentRepository.save(comment);
-
-        return new CommentUpdateResponseDTO(
-                updatedComment.getUser().getId(),
-                updatedComment.getCourse().getCourseId(),
-                updatedComment.getCommentContent(),
-                updatedComment.getCreatedDate(),
-                updatedComment.getUpdatedDate()
-        );
+        courseCommentRepository.save(comment);
     }
 
     // 댓글 삭제
-    public void deleteComment(CommentDeleteRequestDTO requestDTO) {
-        CourseComment comment = courseCommentRepository.findById(requestDTO.getCourseId())
+    @Transactional
+    public void deleteComment(Long commentId) {
+        CourseComment comment = courseCommentRepository.findById(commentId)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid comment ID"));
+
         courseCommentRepository.delete(comment);
     }
 }

@@ -8,35 +8,36 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/course/{courseId}/comment")
+@RequestMapping("/course/{courseId}")
 public class CourseCommentController {
 
     @Autowired
     private CourseCommentService courseCommentService;
 
     // 댓글 추가
-    @PostMapping
-    public ApiResponse<CommentAddResponseDTO> addComment(
+    @PostMapping("/addComment")
+    public ApiResponse<Void> addComment(
             @PathVariable Long courseId,
             @RequestBody CommentAddRequestDTO requestDTO
     ) {
-        CommentAddResponseDTO responseDTO = courseCommentService.addComment(courseId, requestDTO);
-        return ApiResponse.of(SuccessStatus.COMMENT_ADDED_OK, responseDTO);
+        courseCommentService.addComment(courseId, requestDTO);
+        return ApiResponse.of(SuccessStatus.COMMENT_ADDED_OK, null);
     }
 
     // 댓글 수정
-    @PutMapping
-    public ApiResponse<CommentUpdateResponseDTO> updateComment(
+    @PutMapping("/updateComment/{commentId}")
+    public ApiResponse<Void> updateComment(
+            @PathVariable Long commentId,
             @RequestBody CommentUpdateRequestDTO requestDTO
     ) {
-        CommentUpdateResponseDTO responseDTO = courseCommentService.updateComment(requestDTO);
-        return ApiResponse.of(SuccessStatus.COMMENT_UPDATED_OK, responseDTO);
+        courseCommentService.updateComment(commentId, requestDTO);
+        return ApiResponse.of(SuccessStatus.COMMENT_UPDATED_OK, null);
     }
 
     // 댓글 삭제
-    @DeleteMapping
-    public ApiResponse<Void> deleteComment(@RequestBody CommentDeleteRequestDTO requestDTO) {
-        courseCommentService.deleteComment(requestDTO);
+    @DeleteMapping("/deleteComment/{commentId}")
+    public ApiResponse<Void> deleteComment(@PathVariable Long commentId) {
+        courseCommentService.deleteComment(commentId);
         return ApiResponse.of(SuccessStatus.COMMENT_DELETED_OK, null);
     }
 }
