@@ -2,6 +2,9 @@ package com.pettrip.converter;
 
 import com.pettrip.app.dto.course.CourseResponseDTO;
 import com.pettrip.domain.course.Course;
+import com.pettrip.domain.course.Coordinate;
+
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -12,16 +15,24 @@ public class CourseConverter {
                 .map(tag -> tag.getName())
                 .collect(Collectors.toList());
 
+        List<CourseResponseDTO.CoordinateResponseDTO> coordinates = course.getCoordinates().stream()
+                .map(CourseConverter::toCoordinateResponseDTO)
+                .collect(Collectors.toList());
+
         return new CourseResponseDTO(
                 course.getCourseId(),
                 course.getCourseName(),
                 course.getCourseDescription(),
-                course.getStatus(),
+                course.getMoveTime(),
+                course.getProvince(),
+                course.getCity(),
                 course.getDistance(),
-                course.getCourseAddress(),
-                course.getCreatedDate(),
-                course.getUpdatedDate(),
-                tags
+                course.getLikeCount(),
+                course.getStatus().toString(),
+                tags,
+                coordinates,
+                course.getCreatedDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")),
+                course.getUpdatedDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))
         );
     }
 
@@ -29,5 +40,13 @@ public class CourseConverter {
         return courses.stream()
                 .map(CourseConverter::toCourseResponseDTO)
                 .collect(Collectors.toList());
+    }
+
+    private static CourseResponseDTO.CoordinateResponseDTO toCoordinateResponseDTO(Coordinate coordinate) {
+        CourseResponseDTO.CoordinateResponseDTO coordinateDTO = new CourseResponseDTO.CoordinateResponseDTO();
+        coordinateDTO.setSequence(coordinate.getSequence());
+        coordinateDTO.setLatitude(coordinate.getLatitude());
+        coordinateDTO.setLongitude(coordinate.getLongitude());
+        return coordinateDTO;
     }
 }

@@ -18,6 +18,8 @@ public class CourseDTO {
         private CourseStatus status;
         private Long userId;
         private List<String> tags;
-        //코스 시작 버튼을 누른시점과 종료버튼을 누른 시점에 대한 코드가 없긴함.
+        private String moveTime; // 이동 시간 (예: "00:01:04")
+        private String province; // 광역시/도
+        private String city; // 시/군/구
 }
 

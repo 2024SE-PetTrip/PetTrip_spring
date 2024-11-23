@@ -36,17 +36,17 @@ public class Course {
     )
     private List<CourseTag> tags; // 코스에 연결된 태그들
 
+    @Column(nullable = false)
+    private String moveTime; // 코스 이동 시간 (예: "00:01:04")
+
+    @Column(length = 100)
+    private String province; // 광역시/도
+
+    @Column(length = 100)
+    private String city; // 시/군/구
+
     @Column
     private double distance; // 코스 거리
-
-    @Column
-    private LocalDateTime startTime; // 코스 시작 시간
-
-    @Column
-    private LocalDateTime endTime; // 코스 종료 시간
-
-    @Column(length = 255)
-    private String courseAddress; // 코스 주소
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
@@ -64,20 +64,6 @@ public class Course {
     @Column
     private LocalDateTime updatedDate; // 코스 수정일
 
-    public String getDuration() {
-        if (startTime != null && endTime != null) {
-            Duration duration = Duration.between(startTime, endTime);
-            long hours = duration.toHours();
-            long minutes = duration.toMinutes() % 60;
-            long seconds = duration.getSeconds() % 60;
-            if (hours > 0) {
-                return String.format("%d시간 %d분 %d초", hours, minutes, seconds);
-            } else {
-                return String.format("%d분 %d초", minutes, seconds);
-            }
-        }
-        return "시간 정보 없음";
-    }
 
     public void updateDistance() {
         //좌표값이 없을때 return
@@ -106,5 +92,22 @@ public class Course {
         double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
 
         return earthRadius * c; // Distance in meters
+    }
+
+    // 이동시간을 포맷팅해서 반환하는 유틸리티 메서드
+    public String getFormattedMoveTime() {
+        try {
+            String[] timeParts = moveTime.split(":");
+            int hours = Integer.parseInt(timeParts[0]);
+            int minutes = Integer.parseInt(timeParts[1]);
+            int seconds = Integer.parseInt(timeParts[2]);
+            if (hours > 0) {
+                return String.format("%d시간 %d분 %d초", hours, minutes, seconds);
+            } else {
+                return String.format("%d분 %d초", minutes, seconds);
+            }
+        } catch (Exception e) {
+            return "시간 정보 없음";
+        }
     }
 }
