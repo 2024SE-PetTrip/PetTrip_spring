@@ -6,6 +6,8 @@ import com.pettrip.app.dto.care.CareRequestDTO;
 import com.pettrip.app.dto.care.CareResponseDTO;
 import com.pettrip.app.dto.walk.WalkGroupRequestDTO;
 import com.pettrip.app.dto.walk.WalkGroupResponseDTO;
+import com.pettrip.app.dto.walk.WalkGroupUserRequestDTO;
+import com.pettrip.app.dto.walk.WalkGroupUserResponseDTO;
 import com.pettrip.service.walk.WalkGroupService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,6 +47,14 @@ public class WalkController {
                 walkGroupService.getGroupDetailFromCreator(walkGroupId, creatorId);
 
         return ApiResponse.of(SuccessStatus.WALK_GROUP_CREATOR_DETAIL_OK, walkGroupById);
+    }
+
+    @PostMapping("/join")
+    public ApiResponse<WalkGroupUserResponseDTO> joinWalkGroup(
+            @RequestBody WalkGroupUserRequestDTO requestDTO) {
+        WalkGroupUserResponseDTO walkGroupUserResponseDTO = walkGroupService.joinWalkGroup(requestDTO);
+
+        return ApiResponse.of(SuccessStatus.WALK_GROUP_JOIN_REQUEST_OK, walkGroupUserResponseDTO);
     }
 
 }

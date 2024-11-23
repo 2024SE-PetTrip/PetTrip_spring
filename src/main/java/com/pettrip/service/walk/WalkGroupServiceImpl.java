@@ -4,11 +4,14 @@ import com.pettrip.apiPayload.code.status.ErrorStatus;
 import com.pettrip.apiPayload.exception.handler.AppHandler;
 import com.pettrip.app.dto.walk.WalkGroupRequestDTO;
 import com.pettrip.app.dto.walk.WalkGroupResponseDTO;
+import com.pettrip.app.dto.walk.WalkGroupUserRequestDTO;
+import com.pettrip.app.dto.walk.WalkGroupUserResponseDTO;
 import com.pettrip.converter.CareConverter;
 import com.pettrip.converter.WalkGroupConverter;
 import com.pettrip.domain.User;
 import com.pettrip.domain.walk.WalkGroup;
 import com.pettrip.domain.walk.WalkGroupTag;
+import com.pettrip.domain.walk.WalkGroupUser;
 import com.pettrip.repository.UserRepository;
 import com.pettrip.repository.WalkGroupRepository;
 import com.pettrip.repository.WalkGroupTagRepository;
@@ -77,6 +80,19 @@ public class WalkGroupServiceImpl implements WalkGroupService {
         }
 
         return WalkGroupConverter.getGroupDetailFromCreatorDTO(walkGroup);
+    }
+
+    public WalkGroupUserResponseDTO joinWalkGroup(WalkGroupUserRequestDTO requestDTO) {
+        WalkGroup group = walkGroupRepository.findById(requestDTO.getGroupId())
+                .orElseThrow(() -> new AppHandler(ErrorStatus.NOT_FOUND_WALK_GROUP));
+        User user = userRepository.findById(requestDTO.getUserId())
+                .orElseThrow(() -> new AppHandler(ErrorStatus.NOT_FOUND_USER));
+
+        WalkGroupUser walkGroupUser = WalkGroupConverter.walkGroupUser(requestDTO, group, user);
+
+        walkGroupUserRepository.save(walkGroupUser);
+
+        return WalkGroupConverter.walkGroupUserResponseDTO(walkGroupUser);
     }
 
 }
