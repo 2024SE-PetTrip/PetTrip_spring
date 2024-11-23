@@ -39,9 +39,9 @@ public class WalkGroupServiceImpl implements WalkGroupService {
         User creator = userRepository.findById(dto.getCreatorId())
                 .orElseThrow(() -> new AppHandler(ErrorStatus.NOT_FOUND_USER));
 
-        // 태그 ID 리스트를 엔티티 리스트로 변환
+        // 태그 name 리스트를 엔티티 리스트로 변환
         List<WalkGroupTag> tags = dto.getTags().stream()
-                .map(tagId -> walkGroupTagRepository.findById(tagId)
+                .map(tagName -> walkGroupTagRepository.findByName(tagName)
                         .orElseThrow(() -> new AppHandler(ErrorStatus.NOT_FOUND_WALK_GROUP_TAG)))
                 .collect(Collectors.toList());
 
