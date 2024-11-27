@@ -1,5 +1,6 @@
 package com.pettrip.domain.care;
 
+import com.pettrip.domain.Pet;
 import com.pettrip.domain.User;
 import com.pettrip.domain.common.BaseEntity;
 import com.pettrip.domain.enums.CareRequestStatus;

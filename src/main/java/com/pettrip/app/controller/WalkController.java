@@ -23,7 +23,7 @@ public class WalkController {
     private final WalkGroupService walkGroupService;
 
     @PostMapping("/add")
-    public ApiResponse<WalkGroupResponseDTO.AddGroupDTO> addCareRequest(@RequestBody WalkGroupRequestDTO walkGroupRequestDTO) {
+    public ApiResponse<WalkGroupResponseDTO.AddGroupDTO> addWalkGroup(@RequestBody WalkGroupRequestDTO walkGroupRequestDTO) {
         WalkGroupResponseDTO.AddGroupDTO walkGroup = walkGroupService.createWalkGroup(walkGroupRequestDTO);
         return ApiResponse.of(SuccessStatus.WALK_GROUP_REQUEST_OK, walkGroup);
     }
@@ -47,6 +47,22 @@ public class WalkController {
                 walkGroupService.getGroupDetailFromCreator(walkGroupId, creatorId);
 
         return ApiResponse.of(SuccessStatus.WALK_GROUP_CREATOR_DETAIL_OK, walkGroupById);
+    }
+
+    @GetMapping("/filter")
+    public ApiResponse<List<WalkGroupResponseDTO.GetGroupDTO>> filterWalkGroups(
+            @RequestParam(required = false) String address,
+            @RequestParam(required = false) List<String> tags) {
+
+        List<WalkGroupResponseDTO.GetGroupDTO> walkGroups;
+
+        if ((address == null || address.isEmpty()) && (tags == null || tags.isEmpty())) {
+            walkGroups = walkGroupService.getAllWalkGroup();
+        } else {
+            walkGroups = walkGroupService.filterWalkGroups(address, tags);
+        }
+
+        return ApiResponse.of(SuccessStatus.WALK_GROUP_LIST_OK, walkGroups);
     }
 
     @PostMapping("/join")

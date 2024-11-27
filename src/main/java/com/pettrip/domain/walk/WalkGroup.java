@@ -2,6 +2,7 @@ package com.pettrip.domain.walk;
 
 import com.pettrip.domain.User;
 import com.pettrip.domain.common.BaseEntity;
+import com.pettrip.domain.course.Course;
 import lombok.*;
 
 import javax.persistence.*;
@@ -23,8 +24,9 @@ public class WalkGroup extends BaseEntity {
     @Column(nullable = false, length = 20)
     private String groupName; // 모임 이름
 
-    @Column(nullable = false)
-    private Long courseId; // 코스 고유 코드
+    @ManyToOne
+    @JoinColumn(name = "course_id", nullable = false)
+    private Course course; // 코스 고유 코드
 
     @Column(nullable = false)
     private LocalDate startDate; // 모임 시작일

@@ -29,6 +29,8 @@ public enum ErrorStatus implements BaseErrorCode {
     REGISTER_PASSWORD_EMPTY(HttpStatus.BAD_REQUEST, 41008, "비밀번호를 입력해주세요."),
     REGISTER_PASSWORD_TOO_LONG(HttpStatus.BAD_REQUEST, 41009, "비밀번호는 최대 70자입니다."),
 
+    NOT_FOUND_COURSE(HttpStatus.BAD_REQUEST, 40201, "존재하지 않는 코스입니다."),
+
     NOT_FOUND_WALK_GROUP_TAG(HttpStatus.BAD_REQUEST, 40301, "존재하지 않은 산책 그룹 태그입니다."),
     NOT_FOUND_WALK_GROUP(HttpStatus.BAD_REQUEST, 40302, "존재하지 않은 산책 그룹입니다."),
     NOT_GROUP_CREATOR(HttpStatus.BAD_REQUEST, 40303, "산책 모임 모집의 작성자가 아닙니다"),

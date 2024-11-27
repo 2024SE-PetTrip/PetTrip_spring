@@ -2,6 +2,7 @@ package com.pettrip.converter;
 
 import com.pettrip.app.dto.walk.*;
 import com.pettrip.domain.User;
+import com.pettrip.domain.course.Course;
 import com.pettrip.domain.walk.WalkGroup;
 import com.pettrip.domain.walk.WalkGroupTag;
 import com.pettrip.domain.walk.WalkGroupUser;
@@ -11,10 +12,10 @@ import java.util.stream.Collectors;
 
 public class WalkGroupConverter {
 
-    public static WalkGroup toWalkGroup(WalkGroupRequestDTO dto, List<WalkGroupTag> tags, User creator) {
+    public static WalkGroup toWalkGroup(WalkGroupRequestDTO dto, Course course, List<WalkGroupTag> tags, User creator) {
         return WalkGroup.builder()
                 .groupName(dto.getGroupName())
-                .courseId(dto.getCourseId())
+                .course(course)
                 .startDate(dto.getStartDate())
                 .endDate(dto.getEndDate())
                 .walkingDate(dto.getWalkingDate())
@@ -48,7 +49,7 @@ public class WalkGroupConverter {
         return WalkGroupResponseDTO.GetGroupDetailDTO.builder()
                 .groupId(walkGroup.getGroupId())
                 .groupName(walkGroup.getGroupName())
-                .courseId(walkGroup.getCourseId())
+                .courseId(walkGroup.getCourse().getCourseId())
                 .startDate(walkGroup.getStartDate())
                 .endDate(walkGroup.getEndDate())
                 .walkingDate(walkGroup.getWalkingDate())
@@ -59,13 +60,16 @@ public class WalkGroupConverter {
                 .tags(walkGroup.getTags().stream()
                         .map(WalkGroupConverter::walkGroupTagResponseDTO)
                         .collect(Collectors.toList()))
+                .members(walkGroup.getMembers().stream()
+                        .map(WalkGroupConverter::memberDTO)
+                        .collect(Collectors.toList()))
                 .build();
     }
 
     public static WalkGroupResponseDTO.GetGroupDetailFromCreatorDTO getGroupDetailFromCreatorDTO(WalkGroup walkGroup) {
         return WalkGroupResponseDTO.GetGroupDetailFromCreatorDTO.builder()
                 .groupId(walkGroup.getGroupId())
-                .courseId(walkGroup.getCourseId())
+                .courseId(walkGroup.getCourse().getCourseId())
                 .walkingDate(walkGroup.getWalkingDate())
                 .groupDescription(walkGroup.getGroupDescription())
                 .creatorId(walkGroup.getCreator().getId())
