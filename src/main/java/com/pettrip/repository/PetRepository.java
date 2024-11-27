@@ -1,6 +1,6 @@
 package com.pettrip.repository;
 
-import com.pettrip.domain.care.Pet;
+import com.pettrip.domain.Pet;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

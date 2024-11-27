@@ -1,6 +1,6 @@
 package com.pettrip.app.dto.pet;
 
-import com.pettrip.domain.care.Pet;
+import com.pettrip.domain.Pet;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
