@@ -164,6 +164,14 @@ public class CourseService {
         return CourseConverter.toCourseResponseDTOList(activeCourses);
     }
 
+    public List<CourseResponseDTO> getCoursesByUserId(Long userId) {
+        // 사용자의 ACTIVE 상태 코스 가져오기
+        List<Course> courses = courseRepository.findByUser_IdAndStatus(userId, CourseStatus.ACTIVE);
+
+        // CourseConverter 활용
+        return CourseConverter.toCourseResponseDTOList(courses);
+    }
+
     //searchCourses(searchDTO) (아직 구현 x)
     @Transactional
     public int increaseLikeCount(Long courseId) {

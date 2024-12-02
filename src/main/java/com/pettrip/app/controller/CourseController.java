@@ -41,6 +41,12 @@ public class CourseController {
         List<CourseResponseDTO> allCourses = courseService.getAllCourses();
         return ApiResponse.of(SuccessStatus.COURSE_LIST_OK, allCourses);
     }
+
+    @GetMapping("/user/{userId}")
+    public ApiResponse<List<CourseResponseDTO>> getCoursesByUserId(@PathVariable Long userId) {
+        List<CourseResponseDTO> userCourses = courseService.getCoursesByUserId(userId);
+        return ApiResponse.of(SuccessStatus.COURSE_LIST_OK, userCourses);
+    }
     /*
     @GetMapping("/search")
     public ApiResponse<List<CourseResponseDTO>> searchCourses(@RequestBody CourseSearchDTO searchDTO) {
