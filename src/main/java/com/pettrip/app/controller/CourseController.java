@@ -56,4 +56,10 @@ public class CourseController {
         return ApiResponse.of(SuccessStatus.LIKE_SUCCESS, newLikeCount);
     }
 
+    @PostMapping("/{courseId}/dislike")
+    public ApiResponse<Integer> dislikeCourse(@PathVariable Long courseId) {
+        int newLikeCount = courseService.decreaseLikeCount(courseId);
+        return ApiResponse.of(SuccessStatus.DISLIKE_SUCCESS, newLikeCount);
+    }
+
 }

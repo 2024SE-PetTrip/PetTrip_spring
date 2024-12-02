@@ -174,5 +174,14 @@ public class CourseService {
         return course.getLikeCount();
     }
 
+    @Transactional
+    public int decreaseLikeCount(Long courseId) {
+        Course course = courseRepository.findById(courseId)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid course ID"));
+        course.setLikeCount(course.getLikeCount() - 1);
+        courseRepository.save(course);
+        return course.getLikeCount();
+    }
+
 }
 
