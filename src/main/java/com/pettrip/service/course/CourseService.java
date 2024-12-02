@@ -165,8 +165,8 @@ public class CourseService {
     }
 
     public List<CourseResponseDTO> getCoursesByUserId(Long userId) {
-        // 사용자의 ACTIVE 상태 코스 가져오기
-        List<Course> courses = courseRepository.findByUser_IdAndStatus(userId, CourseStatus.ACTIVE);
+        // 사용자의 PROTECTED(비공개) 상태 코스 가져오기
+        List<Course> courses = courseRepository.findByUser_IdAndStatus(userId, CourseStatus.PROTECTED);
 
         // CourseConverter 활용
         return CourseConverter.toCourseResponseDTOList(courses);
