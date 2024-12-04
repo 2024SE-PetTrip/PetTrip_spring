@@ -82,6 +82,8 @@ public class WalkGroupConverter {
     public static WalkGroupResponseDTO.MemberDTO memberDTO(WalkGroupUser walkGroupUser) {
         return WalkGroupResponseDTO.MemberDTO.builder()
                 .userId(walkGroupUser.getUser().getId())
+                .nickname(walkGroupUser.getUser().getNickname())
+                .profileImageUrl(walkGroupUser.getUser().getProfileImageUrl())
                 .isApproved(walkGroupUser.isApproved())
                 .build();
     }

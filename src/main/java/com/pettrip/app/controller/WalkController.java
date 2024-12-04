@@ -2,8 +2,6 @@ package com.pettrip.app.controller;
 
 import com.pettrip.apiPayload.ApiResponse;
 import com.pettrip.apiPayload.code.status.SuccessStatus;
-import com.pettrip.app.dto.care.CareRequestDTO;
-import com.pettrip.app.dto.care.CareResponseDTO;
 import com.pettrip.app.dto.walk.WalkGroupRequestDTO;
 import com.pettrip.app.dto.walk.WalkGroupResponseDTO;
 import com.pettrip.app.dto.walk.WalkGroupUserRequestDTO;
