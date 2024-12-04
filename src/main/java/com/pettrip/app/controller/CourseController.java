@@ -41,6 +41,12 @@ public class CourseController {
         List<CourseResponseDTO> allCourses = courseService.getAllCourses();
         return ApiResponse.of(SuccessStatus.COURSE_LIST_OK, allCourses);
     }
+
+    @GetMapping("/user/{userId}")
+    public ApiResponse<List<CourseResponseDTO>> getCoursesByUserId(@PathVariable Long userId) {
+        List<CourseResponseDTO> userCourses = courseService.getCoursesByUserId(userId);
+        return ApiResponse.of(SuccessStatus.COURSE_LIST_OK, userCourses);
+    }
     /*
     @GetMapping("/search")
     public ApiResponse<List<CourseResponseDTO>> searchCourses(@RequestBody CourseSearchDTO searchDTO) {
@@ -54,6 +60,12 @@ public class CourseController {
     public ApiResponse<Integer> likeCourse(@PathVariable Long courseId) {
         int newLikeCount = courseService.increaseLikeCount(courseId);
         return ApiResponse.of(SuccessStatus.LIKE_SUCCESS, newLikeCount);
+    }
+
+    @PostMapping("/{courseId}/dislike")
+    public ApiResponse<Integer> dislikeCourse(@PathVariable Long courseId) {
+        int newLikeCount = courseService.decreaseLikeCount(courseId);
+        return ApiResponse.of(SuccessStatus.DISLIKE_SUCCESS, newLikeCount);
     }
 
 }

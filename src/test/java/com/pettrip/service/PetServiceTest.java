@@ -1,10 +1,9 @@
 package com.pettrip.service;
 
 import com.pettrip.domain.User;
-import com.pettrip.domain.care.Pet;
+import com.pettrip.domain.Pet;
 import com.pettrip.repository.PetRepository;
 import com.pettrip.repository.UserRepository;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
