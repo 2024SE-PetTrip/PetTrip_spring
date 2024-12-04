@@ -10,7 +10,7 @@ import com.pettrip.converter.CareConverter;
 import com.pettrip.domain.User;
 import com.pettrip.domain.care.CareRequest;
 import com.pettrip.domain.care.Evaluation;
-import com.pettrip.domain.care.Pet;
+import com.pettrip.domain.Pet;
 import com.pettrip.domain.enums.CareRequestStatus;
 import com.pettrip.repository.CareRequestRepository;
 import com.pettrip.repository.EvaluationRepository;

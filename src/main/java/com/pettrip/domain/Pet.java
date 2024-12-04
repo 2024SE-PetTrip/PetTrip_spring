@@ -1,4 +1,4 @@
-package com.pettrip.domain.care;
+package com.pettrip.domain;
 
 import com.pettrip.domain.User;
 import com.pettrip.domain.common.BaseEntity;
@@ -35,4 +35,7 @@ public class Pet extends BaseEntity {
 
     @Column(length = 255)
     private String petImageUrl;
+
+    @Column(nullable = false)
+    private boolean isValidated = false; // 인증 여부 (default: false)
 }

@@ -40,8 +40,13 @@ public class User extends BaseEntity {
     @Column(nullable = false, length = 255)
     private String address;     //사용자의 주소 저장
 
-    //@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-    //private List<UserPloggingGroupApplyment> //userPloggingGroupApplyments;
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private Role role;
+
+    public enum Role {
+        ADMIN, USER
+    }
 
     public static User toUser(JoinDTO joinDTO) {
         User user = new User();
@@ -50,6 +55,7 @@ public class User extends BaseEntity {
         user.setUsername(joinDTO.getUsername());
         user.setPassword(joinDTO.getPassword());
         user.setAddress(joinDTO.getAddress());
+        user.setRole(Role.USER);
         return user;
     }
 
@@ -57,6 +63,7 @@ public class User extends BaseEntity {
         User user = new User();
         user.setUsername(loginDTO.getUsername());
         user.setPassword(loginDTO.getPassword());
+        user.setRole(loginDTO.getRole());
         return user;
     }
 }

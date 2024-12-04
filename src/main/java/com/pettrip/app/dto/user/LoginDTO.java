@@ -1,5 +1,7 @@
 package com.pettrip.app.dto.user;
 
+
+import com.pettrip.domain.User;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -8,7 +10,14 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 public class LoginDTO {
-    private String username;    // email
+    private String username;    //이메일임.
     private String password;
-    // private String role;
+    private User.Role role;
+
+    public User.Role getRole() {
+        return role;
+    }
+
+
+
 }

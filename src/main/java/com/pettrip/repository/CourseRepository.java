@@ -17,4 +17,5 @@ public interface CourseRepository extends JpaRepository<Course, Long> {
 
     // 상태가 ACTIVE인 코스만 가져오는 메서드
     List<Course> findByStatus(CourseStatus status);
+    List<Course> findByUser_IdAndStatus(Long userId, CourseStatus status);
 }

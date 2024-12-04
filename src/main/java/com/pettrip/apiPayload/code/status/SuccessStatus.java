@@ -40,11 +40,14 @@ public enum SuccessStatus implements BaseCode {
     COURSE_DELETED_OK(HttpStatus.OK, 200, "코스 삭제 성공!"),
     COURSE_LIST_OK(HttpStatus.OK, 200, "코스 불러오기 성공!"),
     LIKE_SUCCESS(HttpStatus.OK, 200, "좋아요 성공!"),
+    DISLIKE_SUCCESS(HttpStatus.OK, 200, "좋아요 해제 성공!"),
     COMMENT_ADDED_OK(HttpStatus.OK, 200, "댓글 작성 성공!"),
     COMMENT_UPDATED_OK(HttpStatus.OK, 200, "댓글 수정 성공!"),
-    COMMENT_DELETED_OK(HttpStatus.OK, 200, "댓글 삭제 성공!");
+    COMMENT_DELETED_OK(HttpStatus.OK, 200, "댓글 삭제 성공!"),
 
-
+    //사용자프로필 - 반려동물확인 외부 api관련
+    VALIDATION_SUCCESS(HttpStatus.OK, 200, "반려동물 인증 성공!"),
+    PET_ADDED_OK(HttpStatus.OK, 200, "반려동물 추가 성공!");
     private final HttpStatus httpStatus;
     private final int code;
     private final String message;
