@@ -20,6 +20,9 @@ public enum SuccessStatus implements BaseCode {
     WALK_GROUP_DETAIL_OK(HttpStatus.OK, 200, "산책 모임 상세 조회 성공"),
     WALK_GROUP_CREATOR_DETAIL_OK(HttpStatus.OK, 200, "산책 모임 작성자 시점 상세 조회 성공"),
     WALK_GROUP_JOIN_REQUEST_OK(HttpStatus.OK, 200, "산책 모임 참가 신청 성공"),
+    WALK_GROUP_APPLICANT_ACCEPTED(HttpStatus.OK, 200, "산책 모임 참가 신청 수락 성공"),
+    WALK_GROUP_APPLICANT_REJECTED(HttpStatus.OK, 200, "산책 모임 참가 신청 거절 성공"),
+    WALK_GROUP_MEMBER_REMOVED(HttpStatus.OK, 200, "산책 모임 멤버 삭제 성공"),
     //돌봄
     CARE_REQUEST_OK(HttpStatus.OK, 200, "돌봄 요청 생성 성공"),
     CARE_REQUEST_LIST_OK(HttpStatus.OK, 200, "돌봄 요청 리스트 조회 성공"),
@@ -43,6 +46,7 @@ public enum SuccessStatus implements BaseCode {
     DISLIKE_SUCCESS(HttpStatus.OK, 200, "좋아요 해제 성공!"),
     COMMENT_ADDED_OK(HttpStatus.OK, 200, "댓글 작성 성공!"),
     COMMENT_UPDATED_OK(HttpStatus.OK, 200, "댓글 수정 성공!"),
+
     COMMENT_DELETED_OK(HttpStatus.OK, 200, "댓글 삭제 성공!"),
 
     //사용자프로필 - 반려동물확인 외부 api관련

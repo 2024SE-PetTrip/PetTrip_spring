@@ -21,5 +21,5 @@ public class WalkGroupRequestDTO {
     private Integer maxPetsPerUser;
     private String groupDescription;
     private String groupAddress;
-    private List<Long> tags;
+    private List<String> tags;
 }

@@ -9,6 +9,19 @@ import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
 
+/*
+ws://localhost:8080/chat/inbox
+
+구독
+/sub/channel/cc39b29a-14c5-4abd-b6a2-02d05ed50666
+
+발행
+/sub/channel/cc39b29a-14c5-4abd-b6a2-02d05ed50666
+/pub/message
+chatmessageDTO:
+{ "roomId": "cc39b29a-14c5-4abd-b6a2-02d05ed50666", "authorId": 2, "message": "안녕하세요" }
+ */
+
 @Controller
 @RequiredArgsConstructor
 @Slf4j

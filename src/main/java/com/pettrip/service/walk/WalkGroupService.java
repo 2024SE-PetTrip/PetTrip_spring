@@ -17,5 +17,13 @@ public interface WalkGroupService {
 
     WalkGroupResponseDTO.GetGroupDetailFromCreatorDTO getGroupDetailFromCreator(Long walkGroupId, Long creatorId);
 
+    List<WalkGroupResponseDTO.GetGroupDTO> filterWalkGroups(String address, List<String> tags);
+
     WalkGroupUserResponseDTO joinWalkGroup(WalkGroupUserRequestDTO requestDTO);
+
+    void acceptApplicant(Long walkGroupId, Long userId);
+
+    void rejectApplicant(Long walkGroupId, Long userId);
+
+    void removeMember(Long walkGroupId, Long userId);
 }

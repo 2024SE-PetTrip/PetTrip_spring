@@ -41,6 +41,7 @@ public class WalkGroupResponseDTO {
         private String groupDescription;
         private String groupAddress;
         private List<WalkGroupTagResponseDTO> tags;
+        private List<MemberDTO> members;
     }
 
     @Getter

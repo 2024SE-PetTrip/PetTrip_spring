@@ -29,9 +29,13 @@ public enum ErrorStatus implements BaseErrorCode {
     REGISTER_PASSWORD_EMPTY(HttpStatus.BAD_REQUEST, 41008, "비밀번호를 입력해주세요."),
     REGISTER_PASSWORD_TOO_LONG(HttpStatus.BAD_REQUEST, 41009, "비밀번호는 최대 70자입니다."),
 
+    NOT_FOUND_COURSE(HttpStatus.BAD_REQUEST, 40201, "존재하지 않는 코스입니다."),
+
     NOT_FOUND_WALK_GROUP_TAG(HttpStatus.BAD_REQUEST, 40301, "존재하지 않은 산책 그룹 태그입니다."),
     NOT_FOUND_WALK_GROUP(HttpStatus.BAD_REQUEST, 40302, "존재하지 않은 산책 그룹입니다."),
     NOT_GROUP_CREATOR(HttpStatus.BAD_REQUEST, 40303, "산책 모임 모집의 작성자가 아닙니다"),
+    NOT_FOUND_WALK_GROUP_APPLICANTS(HttpStatus.BAD_REQUEST, 40304, "해당 산책 모임 참가 신청자를 찾을 수 없습니다"),
+    NOT_FOUND_WALK_GROUP_MEMBER(HttpStatus.BAD_REQUEST, 40303, "해당 산책 모임 멤버를 찾을 수 없습니다."),
 
     NOT_FOUND_USER(HttpStatus.BAD_REQUEST, 40401, "존재하지 않는 회원입니다."),
     NOT_FOUND_PET(HttpStatus.BAD_REQUEST, 40402, "존재하지 않는 반려동물입니다."),
@@ -43,7 +47,6 @@ public enum ErrorStatus implements BaseErrorCode {
 
 
     // 여기 관련해서 하고싶은 응답들 정의해주세요..
-
     private final HttpStatus httpStatus;
     private final int code;
     private final String message;
