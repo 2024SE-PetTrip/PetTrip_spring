@@ -73,9 +73,7 @@ public class JoinService {
         String encodedPW = bCryptPasswordEncoder.encode(password);
         joinDTO.setPassword(encodedPW);
         User data = User.toUser(joinDTO);
-        //data.setRole("ROLE_ADMIN");
         userRepository.save(data);
-
         return StatusResponse.ofSuccess(SuccessStatus.REGISTER_JOIN_OK);
     }
 }

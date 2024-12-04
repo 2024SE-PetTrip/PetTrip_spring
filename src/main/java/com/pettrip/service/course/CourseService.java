@@ -164,12 +164,29 @@ public class CourseService {
         return CourseConverter.toCourseResponseDTOList(activeCourses);
     }
 
+    public List<CourseResponseDTO> getCoursesByUserId(Long userId) {
+        // 사용자의 PROTECTED(비공개) 상태 코스 가져오기
+        List<Course> courses = courseRepository.findByUser_IdAndStatus(userId, CourseStatus.PROTECTED);
+
+        // CourseConverter 활용
+        return CourseConverter.toCourseResponseDTOList(courses);
+    }
+
     //searchCourses(searchDTO) (아직 구현 x)
     @Transactional
     public int increaseLikeCount(Long courseId) {
         Course course = courseRepository.findById(courseId)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid course ID"));
         course.setLikeCount(course.getLikeCount() + 1);
+        courseRepository.save(course);
+        return course.getLikeCount();
+    }
+
+    @Transactional
+    public int decreaseLikeCount(Long courseId) {
+        Course course = courseRepository.findById(courseId)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid course ID"));
+        course.setLikeCount(course.getLikeCount() - 1);
         courseRepository.save(course);
         return course.getLikeCount();
     }
