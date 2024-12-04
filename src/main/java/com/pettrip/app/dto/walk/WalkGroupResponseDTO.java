@@ -66,6 +66,8 @@ public class WalkGroupResponseDTO {
     @Builder
     public static class MemberDTO {
         private Long userId;
+        private String nickname;
+        private String profileImageUrl;
         private boolean isApproved;
     }
 }
