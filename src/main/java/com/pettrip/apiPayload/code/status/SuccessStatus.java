@@ -46,8 +46,8 @@ public enum SuccessStatus implements BaseCode {
     DISLIKE_SUCCESS(HttpStatus.OK, 200, "좋아요 해제 성공!"),
     COMMENT_ADDED_OK(HttpStatus.OK, 200, "댓글 작성 성공!"),
     COMMENT_UPDATED_OK(HttpStatus.OK, 200, "댓글 수정 성공!"),
-
     COMMENT_DELETED_OK(HttpStatus.OK, 200, "댓글 삭제 성공!"),
+    COMMENTS_FETCHED_OK(HttpStatus.OK, 200, "댓글 가져오기 성공!"),
 
     //사용자프로필 - 반려동물확인 외부 api관련
     VALIDATION_SUCCESS(HttpStatus.OK, 200, "반려동물 인증 성공!"),

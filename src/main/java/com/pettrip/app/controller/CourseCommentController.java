@@ -7,6 +7,8 @@ import com.pettrip.service.course.CourseCommentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/course/{courseId}")
 public class CourseCommentController {
@@ -39,5 +41,11 @@ public class CourseCommentController {
     public ApiResponse<Void> deleteComment(@PathVariable Long commentId) {
         courseCommentService.deleteComment(commentId);
         return ApiResponse.of(SuccessStatus.COMMENT_DELETED_OK, null);
+    }
+
+    @GetMapping("/comments")
+    public ApiResponse<List<CommentResponseDTO>> getComments(@PathVariable Long courseId) {
+        List<CommentResponseDTO> comments = courseCommentService.getCommentsByCourseId(courseId);
+        return ApiResponse.of(SuccessStatus.COMMENTS_FETCHED_OK, comments);
     }
 }
