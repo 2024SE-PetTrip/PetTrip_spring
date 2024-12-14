@@ -51,7 +51,9 @@ public enum SuccessStatus implements BaseCode {
 
     //사용자프로필 - 반려동물확인 외부 api관련
     VALIDATION_SUCCESS(HttpStatus.OK, 200, "반려동물 인증 성공!"),
-    PET_ADDED_OK(HttpStatus.OK, 200, "반려동물 추가 성공!");
+    PET_ADDED_OK(HttpStatus.OK, 200, "반려동물 추가 성공!"),
+    PROFILE_LOAD_OK(HttpStatus.OK, 200, "프로필 로드 성공!");
+
     private final HttpStatus httpStatus;
     private final int code;
     private final String message;
