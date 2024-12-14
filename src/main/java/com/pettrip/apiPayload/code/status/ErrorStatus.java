@@ -42,8 +42,9 @@ public enum ErrorStatus implements BaseErrorCode {
     NOT_FOUND_CARE_REQUEST(HttpStatus.BAD_REQUEST, 40404, "존재하지 않는 돌봄요청입니다."),
     INVALID_MATCH_STATUS(HttpStatus.BAD_REQUEST, 40405, "돌봄 서비스를 매칭할 수 없습니다."),
     INVALID_EVALUATION_STATUS(HttpStatus.BAD_REQUEST, 40406, "돌봄 서비스를 평가할 수 없습니다."),
-    NOT_FOUND_CHATROOM(HttpStatus.BAD_REQUEST, 40407, "채팅방을 찾을 수 없습니다.");
+    NOT_FOUND_CHATROOM(HttpStatus.BAD_REQUEST, 40407, "채팅방을 찾을 수 없습니다."),
 
+    PROFILE_NOT_FOUND(HttpStatus.BAD_REQUEST, 40501, "프로필을 찾을 수 없습니다.");
 
 
     // 여기 관련해서 하고싶은 응답들 정의해주세요..
